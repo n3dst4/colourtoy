@@ -1,0 +1,7 @@
+html { font-family: sans-serif; color: #eee; background: #333; }
+
+#main-swatch { width: 400px; height: 100px; background: black; -moz-border-radius: 1em; }
+
+.slider-label { margin-top: 1em; }
+
+.slider { width: 400px;  }
