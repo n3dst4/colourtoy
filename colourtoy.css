@@ -1,7 +1,16 @@
 html { font-family: sans-serif; color: #eee; background: #333; }
 
-#main-swatch { width: 400px; height: 100px; background: black; -moz-border-radius: 1em; }
+#main-swatch { width: 400px; height: 100px; background: black;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    -webkit-border-radius: 0.5em; }
 
 .slider-label { margin-top: 1em; }
 
 .slider { width: 400px;  }
+
+
+.colour-range { width: 400px; height: 20px; position: relative; }
+.colour-range .colour-range-component { width: 100%; height: 100%; position: absolute; top: 0px; left: 0px; }
+#h-full-spectrum {  background: black url(images/full-spectrum.png); }

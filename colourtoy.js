@@ -33,6 +33,7 @@ updateRGB = function (event) {
     $("#h-slider").slider("value", c.h);
     $("#s-slider").slider("value", c.s);
     $("#l-slider").slider("value", c.l);
+    updateColourRanges(c.h, c.s, c.l);
 };
 
 updateHSL = function (event) {
@@ -45,6 +46,24 @@ updateHSL = function (event) {
     $("#r-slider").slider("value", rgb.r);
     $("#g-slider").slider("value", rgb.g);
     $("#b-slider").slider("value", rgb.b);
+    updateColourRanges(h, s, l);
+};
+
+updateColourRanges = function (h, s, l) {
+    var c = new Colour({h: 0, s:0, l: l});
+    // hue
+    $("#h-full-spectrum-shading").css({
+        "background-color": c.toString(),
+        opacity: Math.max(1 - s, Math.abs(0.5 - l) * 2)
+    });
+    // saturation
+    $("#s-base-colour").css("background-color", new Colour({h: h, s: 1, l: 0.5}).toString());
+    $("#s-shading").css({
+        "background-color": (l < 0.5)?"#000":"#fff",
+        opacity: Math.abs(0.5 - l) * 2
+    });
+    //lightness
+    $("#l-base-colour").css("background-color", new Colour({h: h, s: s, l: 0.5}).toString());    
 };
 
 
@@ -54,3 +73,22 @@ updateHSL = function (event) {
 
 
 }(jQuery));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
