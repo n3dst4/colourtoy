@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="colourtoy.css" type="text/css" />
     <style type="text/css">
     </style>
+
     <!--[if lte IE 7]>
     <style type="text/css">
     </style>
     <![endif]-->
+    
+    <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+    
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
     
@@ -26,37 +30,30 @@
         <h2>RGB</h2>
         
         <div class="slider-label">Red</div>
+        <canvas class="colour-range" id="colour-range-r" width="400" height="20"></canvas>
         <div id="r-slider" class="slider"></div>
         
         <div class="slider-label">Green</div>
+        <canvas class="colour-range" id="colour-range-g" width="400" height="20"></canvas>
         <div id="g-slider" class="slider"></div>
         
         <div class="slider-label">Blue</div>
+        <canvas class="colour-range" id="colour-range-b" width="400" height="20"></canvas>
         <div id="b-slider" class="slider"></div>
     </div>
     <div id="hsl-sliders">
         <h2>HSL</h2>
         
         <div class="slider-label">Hue</div>
-        <div class="colour-range">
-            <img class="colour-range-component" id="h-full-spectrum" src="images/full-spectrum.png" />
-            <div class="colour-range-component" id="h-full-spectrum-shading"><!----></div>
-        </div>
+        <canvas class="colour-range" id="colour-range-h" width="400" height="20"></canvas>
         <div id="h-slider" class="slider"></div>
         
         <div class="slider-label">Saturation</div>
-        <div class="colour-range">
-            <div class="colour-range-component" id="s-base-colour"><!----></div>
-            <img class="colour-range-component" id="s-gradient" src="images/gradient-grey-transparent.png"/>
-            <div class="colour-range-component" id="s-shading"><!----></div>
-        </div>
+        <canvas class="colour-range" id="colour-range-s" width="400" height="20"></canvas>
         <div id="s-slider" class="slider"></div>
         
         <div class="slider-label">Lightness</div>
-        <div class="colour-range">
-            <div class="colour-range-component" id="l-base-colour"><!----></div>
-            <img class="colour-range-component" id="l-gradient" src="images/black-transparent-white.png"/>
-        </div>
+        <canvas class="colour-range" id="colour-range-l" width="400" height="20"></canvas>
         <div id="l-slider" class="slider"></div>
     </div>
 </body>
