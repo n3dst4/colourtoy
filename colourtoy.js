@@ -9,7 +9,6 @@ $(function () {
     $("#rgb-sliders .slider").slider($.extend({}, opts, {
         min: 0,
         max: 255,
-        range: "min",
         slide: updateRGB,
         stop: updateRGB
     }));
@@ -17,7 +16,6 @@ $(function () {
         min: 0,
         max: 1,
         step: 0.01,
-        range: "min",
         slide: updateHSL,
         stop: updateHSL
     }));
