@@ -2,9 +2,27 @@
     
 var updateSwatch, needUpdate = false;
 
+$.widget("ui.colourSlider", {
+    _create: function () {},
+    update: function (colour) {}
+});
+$.ui.colourSlider.prototype.options = {
+    // getGradient
+};
+
+
 $(function () {
     var opts = {
     };
+    
+    $("#r-slider").colourSlider({
+        getGradient: function (colour) {
+            return [colour.red(0), colour.red(255)];
+        },
+        getValue: function (colour) {
+            return colour.red();
+        }
+    });
     
     $("#rgb-sliders .slider").slider($.extend({}, opts, {
         min: 0,
