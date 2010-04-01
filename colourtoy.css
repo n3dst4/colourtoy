@@ -4,19 +4,20 @@ html { font-family: sans-serif; color: #ccc; background: #333; }
     -moz-border-radius: 0.5em;
     -ms-border-radius: 0.5em;
     border-radius: 0.5em;
-    -webkit-border-radius: 0.5em; }
+    -webkit-border-radius: 0.5em;
+    text-align: right;
+    vertical-align: bottom;
+    padding: 1em;}
 
 .slider-label { margin-top: 0.3em; }
 
-.slider { width: 400px; height: 10px; display: inline-block;  }
 
 
-canvas.colour-range { width: 400px; height: 10px; position: relative; display: block;
-    overflow: hidden;
-    border-radius: 0.5em;
-    -webkit-border-radius: 0.5em;
-    -ms-border-radius: 0.5em;
-    -moz-border-radius: 0.5em;
+.ui-colour-slider {
+    display: inline-block;
+    width: 400px;
+    height: 10px;
 }
-
+.ui-colour-range input { display: inline; margin-left: 1em; }
+.ui-colour-range canvas { position: absolute; top:0px; left:0px; }
 
