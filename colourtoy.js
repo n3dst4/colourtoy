@@ -46,12 +46,10 @@ $.widget("ui.colourSlider", {
         this.ctx = this.ctx || this.canvas[0].getContext('2d');
         var grad = this.ctx.createLinearGradient(0,0,255,0);
         for (i=0; i < stops.length; i++) {
-            if (stops[i].toString().length > 7) debugger;
             grad.addColorStop(i * (1/(stops.length-1)), stops[i].toString());
         }
         this.ctx.fillStyle = grad;
         this.ctx.fillRect(0,0,255,20);
-
     }
 });
 $.ui.colourSlider.defaults = {
@@ -70,7 +68,6 @@ $(function () {
         if ( ! needUpdate) {
             needUpdate = true;
             setTimeout(function () {
-                //console.log("update firing: " + colour);
                 mainSwatch.css({
                     "background-color": colour.toString(),
                     color: colour.contrast()
@@ -165,9 +162,7 @@ $(function () {
         }
     }).data("colourSlider");
     
-    updateAll();
-
-    
+    setTimeout(updateAll, 0);    
 });    
 
 
