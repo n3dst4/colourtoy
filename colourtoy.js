@@ -4,37 +4,39 @@ var updateSwatch, needUpdate = false;
 
 $.widget("ui.colourSlider", {
     _init: function () {
-        var self = this,
-            updateFromSlider = function () {
-                self.options.update(self.slider.value());
-            },
-            updateFromInput = function () {
-                self.options.update(self.input.val());
-            };
-        
+        var self = this;
         this.element.addClass("ui-colour-range");
+        
+        // Create slider
         this.sliderDiv = $("<span/>").addClass("ui-colour-slider").appendTo(this.element);
         this.slider = this.sliderDiv.slider({
             min: 0,
             max: this.options.scale,
             step: this.options.step,
-            slide: updateFromSlider,
-            change:  updateFromSlider
+            slide: function (event, ui) {
+                self.options.update(ui.value);
+            }
         }).data("slider");
         
+        // Create canvas within slider
         this.canvas = $("<canvas/>").attr({
-            width: 400,
+            width: 255,
             height: 10
         }).appendTo(this.sliderDiv);
         
-        this.input = $("<input/>").attr("size", 4);
+        // Create input/spinner
+        this.input = $("<input/>").attr("size", 7);
         this.element.append(this.input);
         this.input.spinner({
             min: 0,
             max: this.options.scale,
-            step: this.options.step
+            step: this.options.step,
+            places: 2,
+            width: 24
         });
-        this.input.change(updateFromInput);
+        this.input.change(function () {
+                self.options.update(self.input.val());
+            });
     },
     update: function (colour) {
         var stops = this.options.getGradient(colour);
@@ -42,13 +44,13 @@ $.widget("ui.colourSlider", {
         this.input.val(this.options.getValue(colour));
         //draw gradient
         this.ctx = this.ctx || this.canvas[0].getContext('2d');
-        var grad = this.ctx.createLinearGradient(0,0,400,0);
+        var grad = this.ctx.createLinearGradient(0,0,255,0);
         for (i=0; i < stops.length; i++) {
             if (stops[i].toString().length > 7) debugger;
             grad.addColorStop(i * (1/(stops.length-1)), stops[i].toString());
         }
         this.ctx.fillStyle = grad;
-        this.ctx.fillRect(0,0,400,20);
+        this.ctx.fillRect(0,0,255,20);
 
     }
 });
@@ -68,7 +70,7 @@ $(function () {
         if ( ! needUpdate) {
             needUpdate = true;
             setTimeout(function () {
-                needUpdate = false;
+                //console.log("update firing: " + colour);
                 mainSwatch.css({
                     "background-color": colour.toString(),
                     color: colour.contrast()
@@ -79,6 +81,7 @@ $(function () {
                 hSlider.update(colour);
                 sSlider.update(colour);
                 lSlider.update(colour);
+                needUpdate = false;
             }, 0);
         }
     }

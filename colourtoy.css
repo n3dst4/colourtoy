@@ -1,6 +1,6 @@
 html { font-family: sans-serif; color: #ccc; background: #333; }
 
-#main-swatch { width: 400px; height: 100px; background: black;
+#main-swatch { width: 255px; height: 100px; background: black;
     -moz-border-radius: 0.5em;
     -ms-border-radius: 0.5em;
     border-radius: 0.5em;
@@ -15,9 +15,12 @@ html { font-family: sans-serif; color: #ccc; background: #333; }
 
 .ui-colour-slider {
     display: inline-block;
-    width: 400px;
+    width: 255px;
     height: 10px;
 }
 .ui-colour-range input { display: inline; margin-left: 1em; }
-.ui-colour-range canvas { position: absolute; top:0px; left:0px; }
+.ui-colour-range canvas { position: absolute; top:0px; left:0px; -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+ }
 
