@@ -1,4 +1,5 @@
-html { font-family: sans-serif; color: #ccc; background: #333; }
+body { font-family: sans-serif}
+
 
 #main-swatch { width: 255px; height: 100px; background: black;
     -moz-border-radius: 0.5em;
