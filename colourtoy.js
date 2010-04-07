@@ -27,13 +27,13 @@ $.widget("ui.colourSlider", {
         // Create input/spinner
         this.input = $("<input/>").attr("size", 7);
         this.element.append(this.input);
-        this.input.spinner({
+        this.spinner = this.input.spinner({
             min: 0,
             max: this.options.scale,
             step: this.options.step,
-            places: 2,
+            places: this.options.places,
             width: 24
-        });
+        }).data("spinner");
         this.input.change(function () {
                 self.options.update(self.input.val());
             });
@@ -41,7 +41,7 @@ $.widget("ui.colourSlider", {
     update: function (colour) {
         var stops = this.options.getGradient(colour);
         this.slider.value(this.options.getValue(colour));
-        this.input.val(this.options.getValue(colour));
+        this.spinner.value(this.options.getValue(colour));
         //draw gradient
         this.ctx = this.ctx || this.canvas[0].getContext('2d');
         var grad = this.ctx.createLinearGradient(0,0,255,0);
@@ -54,7 +54,8 @@ $.widget("ui.colourSlider", {
 });
 $.ui.colourSlider.defaults = {
     scale: 255,
-    step: 1
+    step: 1,
+    places: 0
 };
 
 
@@ -119,6 +120,7 @@ $(function () {
     hSlider = $("#h-slider").colourSlider({
         scale: 1,
         step: 0.01,
+        places: 2,
         getGradient: function (col) {
             return [col.hue(0),
                     col.hue(1/6),
@@ -139,6 +141,7 @@ $(function () {
     sSlider = $("#s-slider").colourSlider({
         scale: 1,
         step: 0.01,
+        places: 2,
         getGradient: function (col) {
             return [col.saturation(0), col.saturation(1)];
         },
@@ -152,6 +155,7 @@ $(function () {
     lSlider = $("#l-slider").colourSlider({
         scale: 1,
         step: 0.01,
+        places: 2,
         getGradient: function (col) {
             return [col.lightness(0), col.lightness(0.5), col.lightness(1)];
         },
