@@ -25,22 +25,30 @@ $.widget("ui.colourSlider", {
         }).appendTo(this.sliderDiv);
         
         // Create input/spinner
-        this.input = $("<input/>").css("width", 40);
+        this.input = $("<input/>").css("width", 50);
         this.element.append(this.input);
         this.spinner = this.input.spinner({
             min: 0,
             max: this.options.scale,
             step: this.options.step,
-            places: this.options.places
+            places: this.options.places,
+            change: function () {
+                debugger;
+                self.options.update(self.input.val());
+            }
         }).data("spinner");
         this.input.change(function () {
-                self.options.update(self.input.val());
-            });
+            self.spinner.selfUpdate = true;
+            self.options.update(self.input.val());
+            self.spinner.selfUpdate = false;
+        });
     },
     update: function (colour) {
-        var stops = this.options.getGradient(colour);
-        this.slider.value(this.options.getValue(colour));
-        this.spinner.value(this.options.getValue(colour));
+        var stops = this.options.getGradient(colour),
+            value = this.options.getValue.call(this.options, colour);
+        this.slider.value(value);
+        //this.spinner.value(value);
+        this.input.val(value.toFixed(this.options.places));
         //draw gradient
         this.ctx = this.ctx || this.canvas[0].getContext('2d');
         var grad = this.ctx.createLinearGradient(0,0,255,0);
@@ -56,6 +64,29 @@ $.ui.colourSlider.defaults = {
     step: 1,
     places: 0
 };
+
+$.widget("ui.colourSliderRGB", $.ui.colourSlider.prototype);
+$.ui.colourSliderRGB.defaults = {
+    scale: 255,
+    step: 1,
+    places: 0,
+    getValue: function (colour) { return colour[this["component"]](); }
+    //format: function (num, places, element) {
+    //    return num//Math.round(num);
+    //}
+};
+
+$.widget("ui.colourSliderHSL", $.ui.colourSlider.prototype);
+$.ui.colourSliderHSL.defaults = {
+    scale: 1,
+    step: 0.01,
+    places: 2,
+    getValue: function (colour) { return colour[this["component"]](); }
+    //format: function (num, places, element) {
+    //    return num//.toFixed(10);
+    //}
+};
+
 
 
 $(function () {
@@ -83,43 +114,35 @@ $(function () {
         }
     }
     
-    rSlider = $("#r-slider").colourSlider({
-        scale: 255,
-        step: 1,
+    rSlider = $("#r-slider").colourSliderRGB({
+        component: "red",
         getGradient: function (col) { return [col.red(0), col.red(255)]; },
-        getValue: function (colour) { return colour.red(); },
         update: function (value) {
             colour = colour.red(value);
             updateAll();
         }
-    }).data("colourSlider");
+    }).data("colourSliderRGB");
     
-    gSlider = $("#g-slider").colourSlider({
-        scale: 255,
-        step: 1,
+    gSlider = $("#g-slider").colourSliderRGB({
+        component: "green",
         getGradient: function (col) { return [col.green(0), col.green(255)]; },
-        getValue: function (colour) { return colour.green(); },
         update: function (value) {
             colour = colour.green(value);
             updateAll();
         }
-    }).data("colourSlider");
+    }).data("colourSliderRGB");
     
-    bSlider = $("#b-slider").colourSlider({
-        scale: 255,
-        step: 1,
+    bSlider = $("#b-slider").colourSliderRGB({
+        component: "blue",
         getGradient: function (col) { return [col.blue(0), col.blue(255)]; },
-        getValue: function (colour) { return colour.blue(); },
         update: function (value) {
             colour = colour.blue(value);
             updateAll();
         }
-    }).data("colourSlider");
+    }).data("colourSliderRGB");
     
-    hSlider = $("#h-slider").colourSlider({
-        scale: 1,
-        step: 0.01,
-        places: 2,
+    hSlider = $("#h-slider").colourSliderHSL({
+        component: "hue",
         getGradient: function (col) {
             return [col.hue(0),
                     col.hue(1/6),
@@ -130,42 +153,35 @@ $(function () {
                     col.hue(0)
                     ];
         },
-        getValue: function (colour) { return colour.hue(); },
         update: function (value) {
             colour = colour.hue(value);
             updateAll();
         }
-    }).data("colourSlider");
+    }).data("colourSliderHSL");
     
-    sSlider = $("#s-slider").colourSlider({
-        scale: 1,
-        step: 0.01,
-        places: 2,
+    sSlider = $("#s-slider").colourSliderHSL({
+        component: "saturation",
         getGradient: function (col) {
             return [col.saturation(0), col.saturation(1)];
         },
-        getValue: function (colour) { return colour.saturation(); },
         update: function (value) {
             colour = colour.saturation(value);
             updateAll();
         }
-    }).data("colourSlider");
+    }).data("colourSliderHSL");
     
-    lSlider = $("#l-slider").colourSlider({
-        scale: 1,
-        step: 0.01,
-        places: 2,
+    lSlider = $("#l-slider").colourSliderHSL({
+        component: "lightness",
         getGradient: function (col) {
             return [col.lightness(0), col.lightness(0.5), col.lightness(1)];
         },
-        getValue: function (colour) { return colour.lightness(); },
         update: function (value) {
             colour = colour.lightness(value);
             updateAll();
         }
-    }).data("colourSlider");
+    }).data("colourSliderHSL");
     
-    setTimeout(updateAll, 0);    
+    setTimeout(updateAll, 0);
 });    
 
 
