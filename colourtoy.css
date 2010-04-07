@@ -25,3 +25,4 @@ body { font-family: sans-serif}
     border-radius: 0.5em;
  }
 
+.colour-pane { float: left; width: 320px; padding: 5px; margin: 5px; }

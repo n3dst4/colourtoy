@@ -25,14 +25,13 @@ $.widget("ui.colourSlider", {
         }).appendTo(this.sliderDiv);
         
         // Create input/spinner
-        this.input = $("<input/>").attr("size", 7);
+        this.input = $("<input/>").css("width", 40);
         this.element.append(this.input);
         this.spinner = this.input.spinner({
             min: 0,
             max: this.options.scale,
             step: this.options.step,
-            places: this.options.places,
-            width: 24
+            places: this.options.places
         }).data("spinner");
         this.input.change(function () {
                 self.options.update(self.input.val());
