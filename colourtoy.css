@@ -2,10 +2,6 @@ body { font-family: sans-serif}
 
 
 #main-swatch { width: 255px; height: 100px; background: black;
-    -moz-border-radius: 0.5em;
-    -ms-border-radius: 0.5em;
-    border-radius: 0.5em;
-    -webkit-border-radius: 0.5em;
     text-align: right;
     vertical-align: bottom;
     padding: 1em;}
@@ -16,13 +12,34 @@ body { font-family: sans-serif}
 
 .ui-colour-slider {
     display: inline-block;
+    position: relative;
     width: 255px;
-    height: 10px;
+    height: 20px;
+    vertical-align: middle;
+    
 }
+
+.ui-colour-slider .ui-slider-handle {
+    top: 12px;
+    background: none ! important;
+    border: 0px solid white ! important;
+    height: 16px;
+    width: 16px;
+    margin-left: -8px;
+}
+
+.colour-slider-grippy {
+    width: 16px;
+    height: 16px;
+    left: 0px;
+    position: absolute;
+    overflow: hidden;
+    bottom: 0px;
+}
+
+
 .ui-colour-range input { display: inline; margin-left: 5px; }
-.ui-colour-range canvas { position: absolute; top:0px; left:0px; -moz-border-radius: 0.5em;
-    -ms-border-radius: 0.5em;
-    border-radius: 0.5em;
+.ui-colour-range canvas { position: absolute; top:0px; left:0px; width: 100%; height: 100%;
  }
 
-.colour-pane { float: left; width: 320px; padding: 5px; margin: 5px; }
+.colour-pane { float: left; width: 420px; padding: 5px; margin: 5px; }

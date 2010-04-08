@@ -19,10 +19,16 @@ $.widget("ui.colourSlider", {
         }).data("slider");
         
         // Create canvas within slider
-        this.canvas = $("<canvas/>").attr({
+        this.canvas = $("<canvas/>")
+        .addClass('ui-corner-all')
+        .attr({
             width: 255,
-            height: 10
+            height: 20
         }).appendTo(this.sliderDiv);
+        //typeof(G_vmlCanvasManager) != "undefined" && G_vmlCanvasManager.initElement(this.canvas.get(0));
+        
+        this.sliderDiv.find(".ui-slider-handle")
+            .append("<img src='thumb.png' class='colour-slider-grippy'>");
         
         // Create input/spinner
         this.input = $("<input/>").css("width", 50);
@@ -50,6 +56,7 @@ $.widget("ui.colourSlider", {
         //this.spinner.value(value);
         this.input.val(value.toFixed(this.options.places));
         //draw gradient
+        //if ( ! this.canvas[0].getContext) debugger;
         this.ctx = this.ctx || this.canvas[0].getContext('2d');
         var grad = this.ctx.createLinearGradient(0,0,255,0);
         for (i=0; i < stops.length; i++) {
@@ -90,6 +97,7 @@ $.ui.colourSliderHSL.defaults = {
 
 
 $(function () {
+    console.log("slider setup");
     var rSlider, gSlider, bSlider, hSlider, sSlider, lSlider,
         mainSwatch = $("#main-swatch"),
         needUpdate = false,
@@ -99,6 +107,7 @@ $(function () {
         if ( ! needUpdate) {
             needUpdate = true;
             setTimeout(function () {
+                console.log("update");
                 mainSwatch.css({
                     "background-color": colour.toString(),
                     color: colour.contrast()
