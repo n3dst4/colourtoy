@@ -112,7 +112,8 @@
        y1="2.5"
        x2="8"
        y2="14"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.1538462,0,0,1.0714286,-1.2307693,1035.2551)" />
     <inkscape:perspective
        id="perspective3612"
        inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
@@ -149,7 +150,8 @@
        y1="1.5"
        x2="6.5"
        y2="15.5"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.1538462,0,0,1.0714286,-1.2307693,1035.2551)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3650"
@@ -158,7 +160,8 @@
        y1="1039.3622"
        x2="6.5"
        y2="1050.8622"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.1731356,0,0,1.0823543,-1.4269836,-86.548729)" />
     <inkscape:perspective
        id="perspective3672"
        inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
@@ -293,7 +296,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="31.678384"
-     inkscape:cx="6.5740447"
+     inkscape:cx="1.6495511"
      inkscape:cy="6.3667544"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -302,7 +305,9 @@
      inkscape:window-height="1138"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1">
+     inkscape:window-maximized="1"
+     inkscape:snap-bbox="true"
+     inkscape:snap-nodes="false">
     <inkscape:grid
        type="xygrid"
        id="grid3592"
@@ -332,14 +337,13 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <path
-       style="fill:url(#linearGradient3602);stroke:url(#linearGradient3648);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1;fill-opacity:1"
-       d="m 1.5,8.5 0,6 0.9306796,1 11.0801104,0 0.98921,-1 0,-6 L 9.5,2 8,1.5 6.5,2 1.5,8.5 z"
+       style="fill:url(#linearGradient3602);fill-opacity:1;stroke:url(#linearGradient3648);stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 0.5,1044.3622 0,6.4286 1.073861,1.0714 12.784743,0 1.141396,-1.0714 0,-6.4286 -5.7692308,-6.9643 L 8,1036.8622 6.2692308,1037.3979 0.5,1044.3622 z"
        id="path3594"
-       sodipodi:nodetypes="cccccccccc"
-       transform="translate(0,1036.3622)" />
+       sodipodi:nodetypes="cccccccccc" />
     <path
-       style="fill:none;stroke:url(#linearGradient3656);stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 2.428571,1044.8622 0.071429,5.5 0.4673231,0.5 10.0326769,0 0.571429,-0.4256 0,-5.5744 -4.285715,-5.5714 L 8,1038.8622 l -1.285714,0.4286 -4.285715,5.5714 z"
+       style="fill:none;stroke:url(#linearGradient3656);stroke-width:1.01171446;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 1.5501501,1044.7125 -0.044293,5.6026 0.5482332,0.5413 11.7696887,0 0.670363,-0.4608 -0.06405,-5.5238 -4.963677,-6.5397 -1.508318,-0.464 -1.508317,0.464 -4.8996349,6.3804 z"
        id="path3594-9"
        sodipodi:nodetypes="cccccccccc" />
     <path
@@ -350,8 +354,8 @@
        sodipodi:cy="10"
        sodipodi:rx="3.5"
        sodipodi:ry="3.5"
-       d="m 13,10 a 3.5,3.5 0 1 1 -7,0 3.5,3.5 0 1 1 7,0 z"
-       transform="translate(-1.5,1035.8622)" />
+       d="m 13,10 c 0,1.932997 -1.567003,3.5 -3.5,3.5 C 7.5670034,13.5 6,11.932997 6,10 6,8.0670034 7.5670034,6.5 9.5,6.5 11.432997,6.5 13,8.0670034 13,10 z"
+       transform="matrix(1.1538462,0,0,1.0714286,-2.9615384,1034.7193)" />
     <path
        sodipodi:type="arc"
        style="opacity:0.43362834;fill:url(#radialGradient3844);fill-opacity:1;stroke:none"
@@ -360,7 +364,7 @@
        sodipodi:cy="10"
        sodipodi:rx="3.5"
        sodipodi:ry="3.5"
-       d="m 13,10 a 3.5,3.5 0 1 1 -7,0 3.5,3.5 0 1 1 7,0 z"
-       transform="matrix(-1,0,0,-1,17.5,1055.8622)" />
+       d="m 13,10 c 0,1.932997 -1.567003,3.5 -3.5,3.5 C 7.5670034,13.5 6,11.932997 6,10 6,8.0670034 7.5670034,6.5 9.5,6.5 11.432997,6.5 13,8.0670034 13,10 z"
+       transform="matrix(-1.1538462,0,0,-1.0714286,18.961538,1056.1479)" />
   </g>
 </svg>
