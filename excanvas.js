@@ -96,7 +96,6 @@ if (!document.createElement('canvas').getContext) {
 
     init_: function(doc) {
       // create xmlns
-      console.log("excanvas init_");
       if (!doc.namespaces['g_vml_']) {
         doc.namespaces.add('g_vml_', 'urn:schemas-microsoft-com:vml',
                            '#default#VML');
