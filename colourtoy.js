@@ -40,7 +40,14 @@ $.widget("ui.colourSlider", {
         
         // Create input/spinner
         this.input = $("<input/>")
-        .css("width", 50)
+        .css({
+            "width": 42,
+            "margin-left": "3px",
+            "font-size": "small",
+            "height": "16px",
+            padding: "1px"
+            //border: "1px solid black"
+        })
         .appendTo(this.element)
         .spinner({
             min: 0,
