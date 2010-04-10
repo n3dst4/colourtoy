@@ -12,19 +12,18 @@ var updateSwatch, needUpdate = false,
  * component
  */
 $.widget("ui.colourSlider", {
+    
     _init: function () {
         var tries = 0, self = this;
         this.element.addClass("ui-colour-range");
-        
+        self.queuedUpdate = null; // used when loading excanvas late
         // Create slider
         this.sliderDiv = $("<span/>").addClass("ui-colour-slider").appendTo(this.element);
         this.slider = this.sliderDiv.slider({
             min: 0,
             max: this.options.scale,
             step: this.options.step,
-            slide: function (event, ui) {
-                self.options.update(ui.value);
-            }
+            slide: function (event, ui) { self.options.update(ui.value); }
         }).data("slider");
         
         // Create canvas within slider
@@ -33,28 +32,9 @@ $.widget("ui.colourSlider", {
         .attr({
             width: 255,
             height: 20
-        }).appendTo(this.sliderDiv);
-        //typeof(G_vmlCanvasManager) != "undefined" && G_vmlCanvasManager.initElement(this.canvas.get(0));
-        
-        self.queuedUpdate = null;
-        function getCtx () {
-            try {
-                console.log("looking for ctx. queued update is " + self.queuedUpdate);
-                self.ctx = self.canvas[0].getContext('2d');
-                if (self.queuedUpdate) { (self.update(self.queuedUpdate)); }
-            }
-            catch (e) {
-                //debugger;
-                console.log("caught error");
-                if (tries < maxTries) {
-                    setTimeout(getCtx, Math.pow(2, tries) * tryDelayFactor);
-                    console.log("requeueing");
-                    tries++;
-                }
-            }
-        }
-        getCtx();
-        
+        })
+        .appendTo(this.sliderDiv);
+        this._acquireCtx();
         this.sliderDiv.find(".ui-slider-handle")
             .append("<img src='thumb.png' class='colour-slider-grippy'>");
         
@@ -73,12 +53,33 @@ $.widget("ui.colourSlider", {
             self.options.update(self.input.val());
         });
     },
+    
+    _acquireCtx: function () {
+        var self = this, tries = 0;
+        function getCtx () {
+            try {
+                self.ctx = self.canvas[0].getContext('2d');
+                if (self.queuedUpdate) { (self.update(self.queuedUpdate)); }
+            }
+            catch (e) {
+                if (tries < maxTries) {
+                    if (typeof(G_vmlCanvasManager) != "undefined") {
+                        G_vmlCanvasManager.initElement(self.canvas.get(0));
+                    }
+                    setTimeout(getCtx, (Math.pow(2, tries) - 1) * tryDelayFactor);
+                    tries++;
+                }
+            }
+        }
+        getCtx();        
+    },
+    
     update: function (colour) {
+        var stops, value = colour[this.options.component]();
+        this.input.val(value.toFixed(this.options.places));
+        this.slider.value(value);
         if (this.ctx) {
-            var stops = this.options.getGradient(colour),
-                value = this.getValueFromColour(colour);
-            this.slider.value(value);
-            this.input.val(value.toFixed(this.options.places));
+            stops = this.options.getGradient(colour);
             var grad = this.ctx.createLinearGradient(0,0,255,0);
             for (i=0; i < stops.length; i++) {
                 grad.addColorStop(i * (1/(stops.length-1)), stops[i].toString());
@@ -89,9 +90,6 @@ $.widget("ui.colourSlider", {
         else {
             this.queuedUpdate = colour;
         }
-    },
-    getValueFromColour: function (colour) {
-        return colour[this.options.component]();
     }
 });
 $.ui.colourSlider.defaults = {
@@ -121,7 +119,7 @@ $.ui.colourSliderHSL.defaults = {
 /*
  * onLoad
  */
-$(function () { setTimeout(function () {
+$(function () {
     var rSlider, gSlider, bSlider, hSlider, sSlider, lSlider,
         mainSwatch = $("#main-swatch"),
         updateQueued = false,
@@ -208,7 +206,7 @@ $(function () { setTimeout(function () {
     }).data("colourSliderHSL");
     
     queueUpdate();
-}, 500)});    
+});    
 
 
 
