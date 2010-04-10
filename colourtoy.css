@@ -2,9 +2,11 @@ body { font-family: sans-serif}
 
 
 #main-swatch { width: 255px; height: 100px; background: black;
-    text-align: right;
-    vertical-align: bottom;
-    padding: 1em;}
+    text-align: right; vertical-align: bottom; padding: 1em; position: relative;}
+    
+#main-readout { position: absolute; top: 0.5em; right: 0.5em; background: none; border: 1px solid white;
+    text-align: right; width: 90px; font-family: "DejaVu Sans Mono", moonospace;
+    color: black;}
 
 .slider-label { margin-top: 0.3em; }
 

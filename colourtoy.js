@@ -14,7 +14,7 @@ var updateSwatch, needUpdate = false,
 $.widget("ui.colourSlider", {
     
     _init: function () {
-        var tries = 0, self = this;
+        var self = this;
         this.element.addClass("ui-colour-range");
         self.queuedUpdate = null; // used when loading excanvas late
         // Create slider
@@ -122,8 +122,25 @@ $.ui.colourSliderHSL.defaults = {
 $(function () {
     var rSlider, gSlider, bSlider, hSlider, sSlider, lSlider,
         mainSwatch = $("#main-swatch"),
+        mainReadOut = $("#main-readout"),
         updateQueued = false,
         colour = Colour("#eb2704");
+        
+    mainReadOut.change(function () {
+        try {
+            colour = new Colour(mainReadOut.val()).alpha(null);
+            queueUpdate();
+        }
+        catch (e) {
+            try {
+                colour = new Colour("#" + mainReadOut.val()).alpha(null);
+                queueUpdate();
+            }
+            catch (e2) {
+                // pass
+            }
+        }
+    });
         
     function queueUpdate () {
         if ( ! updateQueued ) {
@@ -131,7 +148,12 @@ $(function () {
                 mainSwatch.css({
                     "background-color": colour.toString(),
                     color: colour.contrast()
-                }).html(colour.toString());
+                });
+                mainReadOut.css({
+                    "border-color": colour.contrast().toString(),
+                    "background": colour.toString() + " none",
+                    "color": colour.contrast().toString()
+                }).val(colour.toString());
                 rSlider.update(colour);
                 gSlider.update(colour);
                 bSlider.update(colour);
