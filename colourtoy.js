@@ -170,6 +170,7 @@ $.widget("ui.colourSwatchGroup", {
     _init: function () {
         var self = this;
         this.swatches = [];
+        $("<h2/>").html(this.options.title).appendTo(this.element);
         this.options.colourProxy.change(function (colour) {
             self.update(colour);
         });
@@ -180,7 +181,7 @@ $.widget("ui.colourSwatchGroup", {
         this.colours = this.options.makeColours(colour);
         while (this.swatches.length < this.colours.length) {
             this.swatches.push(
-                $("<div/>")
+                $("<span/>")
                     .colourSwatch({click: function () {self.options.colourProxy.set(this.colour);}})
                     .appendTo(self.element)
                     .data("colourSwatch")
@@ -328,18 +329,14 @@ $(function () {
         colourProxy: colour
     }).data("colourComponentHSL");
     
-    //*
     invert = $("#swatch-invert").colourSwatch({
-        title: "Inverse",
         makeColour: function (colour) {
             return colour.invert();
         },
         colourProxy: colour
     }).data("colourSwatch");
-    //*/
 
     complement = $("#swatch-complement").colourSwatch({
-        title: "Complement",
         makeColour: function (colour) {
             return colour.complement();
         },
@@ -347,7 +344,6 @@ $(function () {
     }).data("colourSwatch");
 
     desaturate = $("#swatch-desaturate").colourSwatch({
-        title: "Desaturated",
         makeColour: function (colour) {
             return colour.desaturate();
         },
@@ -355,13 +351,41 @@ $(function () {
     }).data("colourSwatch");
 
     analagous = $("#swatch-analagous").colourSwatchGroup({
-        title: "Analagous scheme",
         makeColours: function (colour) {
             return colour.analagous();
         },
         colourProxy: colour
     }).data("colourSwatchGroup");
 
+    tetrad = $("#swatch-tetrad").colourSwatchGroup({
+        makeColours: function (colour) {
+            return colour.tetrad();
+        },
+        colourProxy: colour
+    }).data("colourSwatchGroup");
+
+    rectTerad = $("#swatch-rect-tetrad").colourSwatchGroup({
+        makeColours: function (colour) {
+            return colour.rectTetrad();
+        },
+        colourProxy: colour
+    }).data("colourSwatchGroup");
+
+    triad = $("#swatch-triad").colourSwatchGroup({
+        makeColours: function (colour) {
+            return colour.triad();
+        },
+        colourProxy: colour
+    }).data("colourSwatchGroup");
+
+    split = $("#swatch-split").colourSwatchGroup({
+        makeColours: function (colour) {
+            return colour.splitComplementary();
+        },
+        colourProxy: colour
+    }).data("colourSwatchGroup");
+
+    $("#swatches").accordion({header: "> h3"});
     
     colour.change();
 });    
