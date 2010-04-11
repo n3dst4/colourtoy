@@ -1,11 +1,11 @@
 body { font-family: sans-serif}
 
 
-#main-swatch { width: 255px; height: 100px; background: black;
-    text-align: right; vertical-align: bottom; padding: 1em;
+#main-swatch { width: 100%; height: 100px; background: black;
+    text-align: right; vertical-align: bottom; padding: 0px;
     position: relative;}
     
-#main-readout { position: absolute; top: 0.5em; right: 0.5em; background: none;
+#main-readout { position: absolute; bottom: 0.5em; right: 0.5em; background: none;
     border: 1px solid white; text-align: right; width: 90px;
     font-family: "DejaVu Sans Mono", monospace; color: black;}
 
@@ -33,8 +33,16 @@ body { font-family: sans-serif}
 }
 
 
-.colour-component input { display: inline; margin-left: 0px; }
-.colour-component canvas { position: absolute; top:0px; left:0px; width: 100%; height: 100%;
- }
+.colour-component input { display: inline; margin-left: 0px; width: 42px;
+    margin-left: 3px; font-size: small; height: 16px; padding: 1px }
+    
+.colour-component canvas { position: absolute; top:0px; left:0px; width: 100%; height: 100%; }
 
 .colour-pane { float: left; width: 310px; padding: 5px; margin: 5px; }
+
+.colour-swatch {width: 90px; height: 70px; float: left; position: relative; margin: 0em 0.5em 0.5em 0em;}
+
+.colour-swatch-readout { display: block; position: absolute; bottom: 0.5em; right: 0.5em;
+    font-family: "DejaVu Sans Mono", monospace; font-size: small;}
+    
+.colour-swatch-title { padding: 0.2em 0.5em; font-size: small; font-weight: normal;}

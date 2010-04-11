@@ -42,13 +42,6 @@ $.widget("ui.colourComponent", {
         
         // Create input/spinner
         this.input = $("<input/>")
-        .css({
-            "width": 42,
-            "margin-left": "3px",
-            "font-size": "small",
-            "height": "16px",
-            padding: "1px"
-        })
         .appendTo(this.element)
         .spinner({
             min: 0,
@@ -95,7 +88,9 @@ $.widget("ui.colourComponent", {
             stops = this.options.getGradient(colour);
             var grad = this.ctx.createLinearGradient(0,0,255,0);
             for (i=0; i < stops.length; i++) {
-                grad.addColorStop(i * (1/(stops.length-1)), stops[i].toString());
+                try {
+                    grad.addColorStop(i * (1/(stops.length-1)), stops[i].toString());
+                } catch (e) { debugger;}
             }
             this.ctx.fillStyle = grad;
             this.ctx.fillRect(0,0,255,20);
@@ -128,8 +123,80 @@ $.ui.colourComponentHSL.defaults = {
 };
 
 
+/*
+ * $.ui.colourSwatch
+ * UI widget for displaying a swatch based on a master colour
+ */
+$.widget("ui.colourSwatch", {
+    _init: function () {
+        var self = this;
+        this.element.addClass("colour-swatch ui-corner-all");
+        this.readout = $("<span class='colour-swatch-readout'/>")
+            .click (function(){return false;})
+            .appendTo(this.element);
+        this.title = $("<h3 class='colour-swatch-title ui-corner-top'/>")
+            .html(this.options.title)
+            .appendTo(this.element);
 
-$.widget("ui.colourComponentHSL", $.ui.colourComponent.prototype);
+        if (this.options.colourProxy) {
+            this.options.colourProxy.change(function (colour) {
+                self.update(colour);
+            });
+        }
+        this.element.click(function (event) {
+            self.options.click();
+        });
+    },
+    update: function (colour) {
+        this.options.colour = this.options.makeColour(colour);
+        this.element.css({
+            "background-color": this.options.colour.toString(),
+            "color": this.options.colour.contrast().toString()
+        });
+        this.readout.html(this.options.colour.toString());
+    }
+});
+$.ui.colourSwatch.defaults = {
+    title: "",
+    colour: new Colour("black"),
+    makeColour: function (colour) { return colour; },
+    click: function () {
+        if (this.colourProxy) {this.colourProxy.set(this.colour);}
+    }
+};
+
+
+$.widget("ui.colourSwatchGroup", {
+    _init: function () {
+        var self = this;
+        this.swatches = [];
+        this.options.colourProxy.change(function (colour) {
+            self.update(colour);
+        });
+
+    },
+    update: function (colour) {
+        var self = this;
+        this.colours = this.options.makeColours(colour);
+        while (this.swatches.length < this.colours.length) {
+            this.swatches.push(
+                $("<div/>")
+                    .colourSwatch({click: function () {self.options.colourProxy.set(this.colour);}})
+                    .appendTo(self.element)
+                    .data("colourSwatch")
+            );
+        }
+        while (this.swatches.length > this.colours.length) {
+            this.swatches.pop().element.remove();
+        }
+        $.each(this.swatches, function (i, swatch) {
+            swatch.update(self.colours[i]);
+        });
+    }
+});
+$.ui.colourSwatchGroup.defaults = {
+    title: ""
+};
 
 
 
@@ -188,7 +255,7 @@ ColourProxy.prototype = {
  * onLoad
  */
 $(function () {
-    var rSlider, gSlider, bSlider, hSlider, sSlider, lSlider,
+    var rSlider, gSlider, bSlider, hSlider, sSlider, lSlider, invert,
         mainSwatch = $("#main-swatch"),
         mainReadOut = $("#main-readout"),
         updateQueued = false,
@@ -260,6 +327,41 @@ $(function () {
         },
         colourProxy: colour
     }).data("colourComponentHSL");
+    
+    //*
+    invert = $("#swatch-invert").colourSwatch({
+        title: "Inverse",
+        makeColour: function (colour) {
+            return colour.invert();
+        },
+        colourProxy: colour
+    }).data("colourSwatch");
+    //*/
+
+    complement = $("#swatch-complement").colourSwatch({
+        title: "Complement",
+        makeColour: function (colour) {
+            return colour.complement();
+        },
+        colourProxy: colour
+    }).data("colourSwatch");
+
+    desaturate = $("#swatch-desaturate").colourSwatch({
+        title: "Desaturated",
+        makeColour: function (colour) {
+            return colour.desaturate();
+        },
+        colourProxy: colour
+    }).data("colourSwatch");
+
+    analagous = $("#swatch-analagous").colourSwatchGroup({
+        title: "Analagous scheme",
+        makeColours: function (colour) {
+            return colour.analagous();
+        },
+        colourProxy: colour
+    }).data("colourSwatchGroup");
+
     
     colour.change();
 });    
