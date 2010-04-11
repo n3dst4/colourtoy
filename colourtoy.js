@@ -7,12 +7,11 @@ var updateSwatch, needUpdate = false,
 
 
 /*
- * $.ui.colourSlider
+ * $.ui.colourComponent
  * UI widget which has a gradiented slider and a spinner for updating a colour
  * component
  */
-$.widget("ui.colourSlider", {
-    
+$.widget("ui.colourComponent", {
     _init: function () {
         var self = this;
         this.element.addClass("colour-component");
@@ -106,27 +105,32 @@ $.widget("ui.colourSlider", {
         }
     }
 });
-$.ui.colourSlider.defaults = {
+$.ui.colourComponent.defaults = {
     scale: 255,
     step: 1,
     places: 0
 };
 
 
-$.widget("ui.colourSliderRGB", $.ui.colourSlider.prototype);
-$.ui.colourSliderRGB.defaults = {
+$.widget("ui.colourComponentRGB", $.ui.colourComponent.prototype);
+$.ui.colourComponentRGB.defaults = {
     scale: 255,
     step: 1,
     places: 0
 };
 
 
-$.widget("ui.colourSliderHSL", $.ui.colourSlider.prototype);
-$.ui.colourSliderHSL.defaults = {
+$.widget("ui.colourComponentHSL", $.ui.colourComponent.prototype);
+$.ui.colourComponentHSL.defaults = {
     scale: 1,
     step: 0.01,
     places: 2
 };
+
+
+
+$.widget("ui.colourComponentHSL", $.ui.colourComponent.prototype);
+
 
 
 
@@ -214,48 +218,48 @@ $(function () {
         }).val(colour.toString());
     });
     
-    rSlider = $("#r-slider").colourSliderRGB({
+    rSlider = $("#r-slider").colourComponentRGB({
         component: "red",
         getGradient: function (col) { return [col.red(0), col.red(255)]; },
         colourProxy: colour
-    }).data("colourSliderRGB");
+    }).data("colourComponentRGB");
     
-    gSlider = $("#g-slider").colourSliderRGB({
+    gSlider = $("#g-slider").colourComponentRGB({
         component: "green",
         getGradient: function (col) { return [col.green(0), col.green(255)]; },
         colourProxy: colour
-    }).data("colourSliderRGB");
+    }).data("colourComponentRGB");
     
-    bSlider = $("#b-slider").colourSliderRGB({
+    bSlider = $("#b-slider").colourComponentRGB({
         component: "blue",
         getGradient: function (col) { return [col.blue(0), col.blue(255)]; },
         colourProxy: colour
-    }).data("colourSliderRGB");
+    }).data("colourComponentRGB");
     
-    hSlider = $("#h-slider").colourSliderHSL({
+    hSlider = $("#h-slider").colourComponentHSL({
         component: "hue",
         getGradient: function (col) {
             return [col.hue(0), col.hue(1/6), col.hue(1/3), col.hue(1/2),
                     col.hue(2/3), col.hue(5/6), col.hue(0)];
         },
         colourProxy: colour
-    }).data("colourSliderHSL");
+    }).data("colourComponentHSL");
     
-    sSlider = $("#s-slider").colourSliderHSL({
+    sSlider = $("#s-slider").colourComponentHSL({
         component: "saturation",
         getGradient: function (col) {
             return [col.saturation(0), col.saturation(1)];
         },
         colourProxy: colour
-    }).data("colourSliderHSL");
+    }).data("colourComponentHSL");
     
-    lSlider = $("#l-slider").colourSliderHSL({
+    lSlider = $("#l-slider").colourComponentHSL({
         component: "lightness",
         getGradient: function (col) {
             return [col.lightness(0), col.lightness(0.5), col.lightness(1)];
         },
         colourProxy: colour
-    }).data("colourSliderHSL");
+    }).data("colourComponentHSL");
     
     colour.change();
 });    
