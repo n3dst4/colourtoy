@@ -192,17 +192,13 @@ $(function () {
         
     mainReadOut.change(function () {
         try {
-            colour = new Colour(mainReadOut.val()).alpha(null);
-            queueUpdate();
+            colour.set(new Colour(mainReadOut.val()).alpha(null));
         }
         catch (e) {
             try {
-                colour = new Colour("#" + mainReadOut.val()).alpha(null);
-                queueUpdate();
+                colour.set(new Colour("#" + mainReadOut.val()).alpha(null));
             }
-            catch (e2) {
-                // pass
-            }
+            catch (e2) { /* can't interpret entry, so do nothing */ }
         }
     });
         
