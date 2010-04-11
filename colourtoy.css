@@ -2,26 +2,19 @@ body { font-family: sans-serif}
 
 
 #main-swatch { width: 255px; height: 100px; background: black;
-    text-align: right; vertical-align: bottom; padding: 1em; position: relative;}
+    text-align: right; vertical-align: bottom; padding: 1em;
+    position: relative;}
     
-#main-readout { position: absolute; top: 0.5em; right: 0.5em; background: none; border: 1px solid white;
-    text-align: right; width: 90px; font-family: "DejaVu Sans Mono", moonospace;
-    color: black;}
+#main-readout { position: absolute; top: 0.5em; right: 0.5em; background: none;
+    border: 1px solid white; text-align: right; width: 90px;
+    font-family: "DejaVu Sans Mono", monospace; color: black;}
 
 .slider-label { margin-top: 0.3em; }
 
+.colour-component-slider { display: inline-block; position: relative; width: 255px;
+    height: 20px; vertical-align: middle; }
 
-
-.ui-colour-slider {
-    display: inline-block;
-    position: relative;
-    width: 255px;
-    height: 20px;
-    vertical-align: middle;
-    
-}
-
-.ui-colour-slider .ui-slider-handle {
+.colour-component-slider .ui-slider-handle {
     top: 12px;
     background: none ! important;
     border: 0px solid white ! important;
@@ -30,7 +23,7 @@ body { font-family: sans-serif}
     margin-left: -8px;
 }
 
-.colour-slider-grippy {
+.colour-component-grippy {
     width: 16px;
     height: 16px;
     left: 0px;
@@ -40,8 +33,8 @@ body { font-family: sans-serif}
 }
 
 
-.ui-colour-range input { display: inline; margin-left: 0px; }
-.ui-colour-range canvas { position: absolute; top:0px; left:0px; width: 100%; height: 100%;
+.colour-component input { display: inline; margin-left: 0px; }
+.colour-component canvas { position: absolute; top:0px; left:0px; width: 100%; height: 100%;
  }
 
 .colour-pane { float: left; width: 310px; padding: 5px; margin: 5px; }
