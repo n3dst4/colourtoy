@@ -260,9 +260,27 @@ $(function () {
         mainSwatch = $("#main-swatch"),
         mainReadOut = $("#main-readout"),
         updateQueued = false,
-        colour = new ColourProxy("#eb2704");
+        colour = new ColourProxy("#eb2704"),
+        themeButtons = $("[name=theme]"),
+        themes = {
+            dark: ["http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/vader/jquery-ui.css",
+                        "colourtoy-dark.css"],
+            light: ["http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css",
+                      "colourtoy-light.css"]
+        },
+        themeElements = $();
         
-    $("#theme-select").buttonset();
+        
+    $("#theme-select").buttonset({text: true});
+    function selectTheme () {
+        var theme = themeButtons.filter(":checked").val();
+        themeElements.remove();
+        themeElements = $($.map(themes[theme], function (url) {
+            return $('<link rel="stylesheet" type="text/css" media="screen" />').attr("href", url)
+        })).insertAfter("#reset-sheet");
+    }
+    themeButtons.change(selectTheme);
+    selectTheme();
 
         
     mainReadOut.change(function () {

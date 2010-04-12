@@ -5,14 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"  />
     
-    <link rel="stylesheet" href="html5reset-1.4.1.css" type="text/css" />
-    <link id="dark-theme" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-darkness/jquery-ui.css" type="text/css" />
-    <link id="light-theme" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" type="text/css" media="none" />
+    <link id="reset-sheet" rel="stylesheet" href="html5reset-1.4.1.css" type="text/css" />
+    
+    
+    
     <link rel="stylesheet" href="ui.spinner.css" type="text/css" />
     <link rel="stylesheet" href="colourtoy.css" type="text/css" />
     
-    <link id="dark-sheet" rel="stylesheet" href="colourtoy-dark.css" type="text/css" media="screen" />
-    <link id="light-sheet" rel="stylesheet" href="colourtoy-light.css" type="text/css" media="none" />
 
     <!--[if lte IE 7]>
     <style type="text/css">
@@ -33,8 +32,8 @@
     <div class="ui-widget-header page-bar">
         <h1>Colour.js Toy</h1>
         <div id="theme-select" class="toolbar-item toolbar-item-right">
-			<input type="radio" id="select-light" name="theme" /><label for="select-light">Light</label>
-			<input type="radio" id="select-dark" name="theme" checked="checked" /><label for="select-dark">Dark</label>
+			<input type="radio" id="select-light" name="theme" value="light" /><label for="select-light">Light</label>
+			<input type="radio" id="select-dark" name="theme" checked="checked" value="dark" /><label for="select-dark">Dark</label>
 		</div>
     </div>
     <div class="ui-widget-content ui-helper-reset colour-pane">
