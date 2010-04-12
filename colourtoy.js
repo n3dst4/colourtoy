@@ -12,7 +12,7 @@ var updateSwatch, needUpdate = false,
  * component
  */
 $.widget("ui.colourComponent", {
-    _init: function () {
+    _create: function () {
         var self = this;
         this.element.addClass("colour-component");
         self.queuedUpdate = null; // used when loading excanvas late
@@ -100,7 +100,7 @@ $.widget("ui.colourComponent", {
         }
     }
 });
-$.ui.colourComponent.defaults = {
+$.ui.colourComponent.prototype.options = {
     scale: 255,
     step: 1,
     places: 0
@@ -108,7 +108,7 @@ $.ui.colourComponent.defaults = {
 
 
 $.widget("ui.colourComponentRGB", $.ui.colourComponent.prototype);
-$.ui.colourComponentRGB.defaults = {
+$.ui.colourComponentRGB.prototype.options = {
     scale: 255,
     step: 1,
     places: 0
@@ -116,7 +116,7 @@ $.ui.colourComponentRGB.defaults = {
 
 
 $.widget("ui.colourComponentHSL", $.ui.colourComponent.prototype);
-$.ui.colourComponentHSL.defaults = {
+$.ui.colourComponentHSL.prototype.options = {
     scale: 1,
     step: 0.01,
     places: 2
@@ -128,7 +128,7 @@ $.ui.colourComponentHSL.defaults = {
  * UI widget for displaying a swatch based on a master colour
  */
 $.widget("ui.colourSwatch", {
-    _init: function () {
+    _create: function () {
         var self = this;
         this.element.addClass("colour-swatch ui-corner-all");
         this.readout = $("<span class='colour-swatch-readout'/>")
@@ -156,7 +156,7 @@ $.widget("ui.colourSwatch", {
         this.readout.html(this.options.colour.toString());
     }
 });
-$.ui.colourSwatch.defaults = {
+$.ui.colourSwatch.prototype.options = {
     title: "",
     colour: new Colour("black"),
     makeColour: function (colour) { return colour; },
@@ -167,7 +167,7 @@ $.ui.colourSwatch.defaults = {
 
 
 $.widget("ui.colourSwatchGroup", {
-    _init: function () {
+    _create: function () {
         var self = this;
         this.swatches = [];
         $("<h2/>").html(this.options.title).appendTo(this.element);
@@ -195,7 +195,7 @@ $.widget("ui.colourSwatchGroup", {
         });
     }
 });
-$.ui.colourSwatchGroup.defaults = {
+$.ui.colourSwatchGroup.prototype.options = {
     title: ""
 };
 
@@ -261,6 +261,9 @@ $(function () {
         mainReadOut = $("#main-readout"),
         updateQueued = false,
         colour = new ColourProxy("#eb2704");
+        
+    $("#theme-select").buttonset();
+
         
     mainReadOut.change(function () {
         try {
@@ -330,6 +333,7 @@ $(function () {
     }).data("colourComponentHSL");
     
     invert = $("#swatch-invert").colourSwatch({
+        title: "Inverse",
         makeColour: function (colour) {
             return colour.invert();
         },
@@ -337,6 +341,7 @@ $(function () {
     }).data("colourSwatch");
 
     complement = $("#swatch-complement").colourSwatch({
+        title: "Complement",
         makeColour: function (colour) {
             return colour.complement();
         },
@@ -344,6 +349,7 @@ $(function () {
     }).data("colourSwatch");
 
     desaturate = $("#swatch-desaturate").colourSwatch({
+        title: "Desaturate",
         makeColour: function (colour) {
             return colour.desaturate();
         },

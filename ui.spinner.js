@@ -50,7 +50,7 @@ $.widget('ui.spinner', {
 	// inputMaxLength - initial maxLength value on the input
 	// focused - this spinner currently has the focus
 
-	_init: function() {
+	_create: function() {
 		// shortcuts
 		var self = this,
 			input = self.element,
@@ -524,9 +524,9 @@ $.widget('ui.spinner', {
 		self._setValue(value);
 	},
 	
-	// overrides _setData to force option parsing
-	_setData: function(key, value) {
-		$.widget.prototype._setData.call(this, key, value);
+	// overrides _setOption to force option parsing
+	_setOption: function(key, value) {
+		$.widget.prototype._setOption.call(this, key, value);
 		this._procOptions();
 	},
 	
@@ -603,10 +603,10 @@ $.widget('ui.spinner', {
 	}	
 });
 
-spinner = $.extend($.ui.spinner, {
+spinner = $.extend($.ui.spinner.prototype, {
 	version: '1.11',
 	getter: 'value',
-	defaults: {
+	options: {
 		min: null,
 		max: null,
 		allowNull: false,
