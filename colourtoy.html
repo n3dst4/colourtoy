@@ -7,11 +7,17 @@
     
     <link id="reset-sheet" rel="stylesheet" href="html5reset-1.4.1.css" type="text/css" />
     
+    <link class="light-theme" rel="stylesheet" type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css" media="" />
     
+    <link class="dark-theme" rel="stylesheet" type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/vader/jquery-ui.css" />
+
+    <link class="light-theme" rel="stylesheet" type="text/css" href="colourtoy-light.css" media="" />
+    <link class="dark-theme" rel="stylesheet" type="text/css" href="colourtoy-dark.css" />
     
     <link rel="stylesheet" href="ui.spinner.css" type="text/css" />
     <link rel="stylesheet" href="colourtoy.css" type="text/css" />
-    
 
     <!--[if lte IE 7]>
     <style type="text/css">
@@ -32,8 +38,8 @@
     <div class="ui-widget-header page-bar">
         <h1>Colour.js Toy</h1>
         <div id="theme-select" class="toolbar-item toolbar-item-right">
-			<input type="radio" id="select-light" name="theme" value="light" /><label for="select-light">Light</label>
-			<input type="radio" id="select-dark" name="theme" checked="checked" value="dark" /><label for="select-dark">Dark</label>
+			<input type="radio" id="select-light" name="theme" value="light-theme" /><label for="select-light">Light</label>
+			<input type="radio" id="select-dark" name="theme" checked="checked" value="dark-theme" /><label for="select-dark">Dark</label>
 		</div>
     </div>
     <div class="ui-widget-content ui-helper-reset colour-pane">
@@ -64,11 +70,9 @@
         </div>
     </div>
     <div id="swatches" class="colour-pane">
-        <h3><a href="#">Various</a></h3>
+        <h3><a href="#">Variants</a></h3>
         <div>
-            <span id="swatch-invert"><!----></span>
-            <span id="swatch-complement"><!----></span>
-            <span id="swatch-desaturate"><!----></span>
+            <span id="swatch-variants"><!----></span>
         </div>
         <h3><a href="#">Analagous colour scheme</a></h3>
         <div id="swatch-analagous"><!----></div>

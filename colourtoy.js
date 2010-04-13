@@ -150,8 +150,8 @@ $.widget("ui.colourSwatch", {
     update: function (colour) {
         this.options.colour = this.options.makeColour(colour);
         this.element.css({
-            "background-color": this.options.colour.toString(),
-            "color": this.options.colour.contrast().toString()
+            "background-color": this.options.colour.toString()
+            //"color": this.options.colour.contrast().toString()
         });
         this.readout.html(this.options.colour.toString());
     }
@@ -256,31 +256,33 @@ ColourProxy.prototype = {
  * onLoad
  */
 $(function () {
+    var themeButtons = $("[name=theme]");
+    $("#select-dark").click();
+    $("#theme-select").buttonset({text: true});
+    function selectTheme (event) {
+        $("link[class*=theme]").each(function () {
+            var el = $(this);
+            if (el.attr("class") == event.target.value) {
+                el.attr("media", "screen");
+            }
+            else {
+                el.attr("media", "none");
+            }
+            console.log(event.target.value);
+        });
+    }
+    themeButtons.change(selectTheme);
+});
+
+
+$(function () {
     var rSlider, gSlider, bSlider, hSlider, sSlider, lSlider, invert,
         mainSwatch = $("#main-swatch"),
         mainReadOut = $("#main-readout"),
         updateQueued = false,
-        colour = new ColourProxy("#eb2704"),
-        themeButtons = $("[name=theme]"),
-        themes = {
-            dark: ["http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/vader/jquery-ui.css",
-                        "colourtoy-dark.css"],
-            light: ["http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css",
-                      "colourtoy-light.css"]
-        },
-        themeElements = $();
+        colour = new ColourProxy("#eb2704");
         
         
-    $("#theme-select").buttonset({text: true});
-    function selectTheme () {
-        var theme = themeButtons.filter(":checked").val();
-        themeElements.remove();
-        themeElements = $($.map(themes[theme], function (url) {
-            return $('<link rel="stylesheet" type="text/css" media="screen" />').attr("href", url)
-        })).insertAfter("#reset-sheet");
-    }
-    themeButtons.change(selectTheme);
-    selectTheme();
 
         
     mainReadOut.change(function () {
@@ -350,29 +352,13 @@ $(function () {
         colourProxy: colour
     }).data("colourComponentHSL");
     
-    invert = $("#swatch-invert").colourSwatch({
-        title: "Inverse",
-        makeColour: function (colour) {
-            return colour.invert();
+    variants = $("#swatch-variants").colourSwatchGroup({
+        makeColours: function (colour) {
+            return [colour, colour.invert(), colour.complement(), colour.desaturate()];
         },
         colourProxy: colour
     }).data("colourSwatch");
 
-    complement = $("#swatch-complement").colourSwatch({
-        title: "Complement",
-        makeColour: function (colour) {
-            return colour.complement();
-        },
-        colourProxy: colour
-    }).data("colourSwatch");
-
-    desaturate = $("#swatch-desaturate").colourSwatch({
-        title: "Desaturate",
-        makeColour: function (colour) {
-            return colour.desaturate();
-        },
-        colourProxy: colour
-    }).data("colourSwatch");
 
     analagous = $("#swatch-analagous").colourSwatchGroup({
         makeColours: function (colour) {
@@ -409,7 +395,7 @@ $(function () {
         colourProxy: colour
     }).data("colourSwatchGroup");
 
-    $("#swatches").accordion({header: "> h3"});
+    $("#swatches").accordion({header: "> h3", autoHeight: false});
     
     colour.change();
 });    
