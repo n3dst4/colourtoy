@@ -7,14 +7,6 @@
     
     <link id="reset-sheet" rel="stylesheet" href="html5reset-1.4.1.css" type="text/css" />
 
-    <!--    
-    <link class="light-theme" rel="stylesheet" type="text/css"
-          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css" media="" />
-    
-    <link class="dark-theme" rel="stylesheet" type="text/css"
-          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/vader/jquery-ui.css" />
-    -->
-    
     <link class="light-theme" rel="stylesheet" type="text/css"
           href="ui-themes/toy-light/jquery-ui-1.8.custom.css" media="" />
     
@@ -50,7 +42,7 @@
 			<input type="radio" id="select-dark" name="theme" checked="checked" value="dark-theme" /><label for="select-dark">Dark</label>
 		</div>
     </div>
-    <div class="ui-widget-content ui-helper-reset colour-pane">
+    <div class="ui-widget-content ui-helper-reset colour-pane colour-pane-tall">
         <div id="main-swatch" class="ui-corner-all"><input id="main-readout"></div>
         <div id="rgb-sliders">
             <h2>RGB</h2>
@@ -77,21 +69,23 @@
             <div id="l-slider"></div>
         </div>
     </div>
-    <div id="swatches" class="colour-pane">
-        <h3><a href="#">Variants</a></h3>
-        <div>
-            <span id="swatch-variants"><!----></span>
+    <div class="ui-widget-content colour-pane colour-pane-tall">
+        <div id="swatches">
+            <h3><a href="#">Variants</a></h3>
+            <div>
+                <span id="swatch-variants"><!----></span>
+            </div>
+            <h3><a href="#">Analagous colour scheme</a></h3>
+            <div id="swatch-analagous"><!----></div>
+            <h3><a href="#">Tetradic colour scheme</a></h3>
+            <div id="swatch-tetrad"><!----></div>
+            <h3><a href="#">Rectangular tetradic colour scheme</a></h3>
+            <div id="swatch-rect-tetrad"><!----></div>
+            <h3><a href="#">Triadic colour scheme</a></h3>
+            <div id="swatch-triad"><!----></div>
+            <h3><a href="#">Split complement colour scheme</a></h3>
+            <div id="swatch-split"><!----></div>
         </div>
-        <h3><a href="#">Analagous colour scheme</a></h3>
-        <div id="swatch-analagous"><!----></div>
-        <h3><a href="#">Tetradic colour scheme</a></h3>
-        <div id="swatch-tetrad"><!----></div>
-        <h3><a href="#">Rectangular tetradic colour scheme</a></h3>
-        <div id="swatch-rect-tetrad"><!----></div>
-        <h3><a href="#">Triadic colour scheme</a></h3>
-        <div id="swatch-triad"><!----></div>
-        <h3><a href="#">Split complement colour scheme</a></h3>
-        <div id="swatch-split"><!----></div>
     </div>
 </body>
 </html>

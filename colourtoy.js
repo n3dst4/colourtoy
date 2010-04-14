@@ -257,7 +257,7 @@ ColourProxy.prototype = {
  */
 $(function () {
     var themeButtons = $("[name=theme]");
-    $("#select-dark").click();
+    $("#select-dark").attr("checked", "checked");
     $("#theme-select").buttonset({text: true});
     function selectTheme (event) {
         $("link[class*=theme]").each(function () {
@@ -281,9 +281,6 @@ $(function () {
         mainReadOut = $("#main-readout"),
         updateQueued = false,
         colour = new ColourProxy("#eb2704");
-        
-        
-
         
     mainReadOut.change(function () {
         try {
@@ -395,7 +392,11 @@ $(function () {
         colourProxy: colour
     }).data("colourSwatchGroup");
 
-    $("#swatches").accordion({header: "> h3", autoHeight: false});
+    $("#swatches").accordion({
+        header: "> h3",
+        //autoHeight: false,
+        fillSpace: true
+    });
     
     colour.change();
 });    

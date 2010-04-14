@@ -50,8 +50,10 @@ body { font-family: sans-serif; font-size: 10px; height: 100%;}
 .colour-component canvas { position: absolute; top:0px; left:0px; width: 100%; height: 100%; }
 
 .colour-pane { float: left; width: 310px; padding: 5px; margin: 5px; position: relative; }
+.colour-pane-tall { height: 360px; }
 
-.colour-swatch {width: 60px; height: 70px; position: relative; margin: 0em 0.5em 1.5em 0em;
+
+.colour-swatch {width: 60px; height: 70px; position: relative; margin: 0px 3px 10px 0px;
     display: inline-block; cursor: pointer; }
 
 .colour-swatch-readout { display: block; position: absolute; bottom: -1.2em; right: 0em;
