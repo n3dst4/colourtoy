@@ -37,7 +37,7 @@ $.widget("ui.colourComponent", {
         })
         .appendTo(this.sliderDiv);
         this._acquireCtx();
-        this.sliderDiv.find(".ui-slider-handle")
+        this.handle = this.sliderDiv.find(".ui-slider-handle")
             .append("<img src='thumb.png' class='colour-component-grippy'>");
         
         // Create input/spinner
@@ -53,6 +53,20 @@ $.widget("ui.colourComponent", {
         .bind("change", function () {
             self.options.colourProxy.set(self.options.colourProxy[self.options.component](self.input.val()));
         });
+        
+        // Create titles
+        this.leftHeader = $("<h4/>")
+        .addClass("slider-label")
+        .html(this.options.title)
+        .appendTo(this.sliderDiv);
+        
+        this.rightHeader = $("<div/>")
+        .addClass("slider-label").addClass("slider-label-spare")
+        .html(this.options.title)
+        .appendTo(this.sliderDiv)
+        .hide();
+        
+        this.shownHeader = "left";
         
         // register with colour proxy
         this.options.colourProxy.change(function (colour) {
@@ -98,6 +112,24 @@ $.widget("ui.colourComponent", {
         else {
             this.queuedUpdate = colour;
         }
+        var leftHeaderColour = stops[0].contrast().toString();
+        var rightHeaderColour = stops.slice(-1)[0].contrast().toString();
+        
+        var handlePos = this.handle.position().left;
+        
+        if (handlePos > 120 && this.shownHeader == "right") {
+            this.rightHeader.stop(false, true).hide();
+            this.leftHeader.stop(false, true).show();
+            this.shownHeader = "left";
+        }
+        if (handlePos < 120 && this.shownHeader == "left") {
+            this.rightHeader.stop(false, true).show();
+            this.leftHeader.stop(false, true).hide();
+            this.shownHeader = "right";
+        }
+        
+        this.leftHeader.css("color", leftHeaderColour);
+        this.rightHeader.css("color", rightHeaderColour);
     }
 });
 $.ui.colourComponent.prototype.options = {
@@ -174,10 +206,12 @@ $.widget("ui.colourSwatchGroup", {
         this.options.colourProxy.change(function (colour) {
             self.update(colour);
         });
+        this.element.addClass("colour-swatch-group");
 
     },
-    update: function (colour) {
+    update: function (colour, force) {
         var self = this;
+        if ( ! (force || this.element.is(":visible"))) { return; }
         this.colours = this.options.makeColours(colour);
         while (this.swatches.length < this.colours.length) {
             this.swatches.push(
@@ -280,7 +314,7 @@ $(function () {
         mainSwatch = $("#main-swatch"),
         mainReadOut = $("#main-readout"),
         updateQueued = false,
-        colour = new ColourProxy("#eb2704");
+        colour = new ColourProxy("hotpink");
         
     mainReadOut.change(function () {
         try {
@@ -307,24 +341,28 @@ $(function () {
     });
     
     rSlider = $("#r-slider").colourComponentRGB({
+        title: "Red",
         component: "red",
         getGradient: function (col) { return [col.red(0), col.red(255)]; },
         colourProxy: colour
     }).data("colourComponentRGB");
     
     gSlider = $("#g-slider").colourComponentRGB({
+        title: "Green",
         component: "green",
         getGradient: function (col) { return [col.green(0), col.green(255)]; },
         colourProxy: colour
     }).data("colourComponentRGB");
     
     bSlider = $("#b-slider").colourComponentRGB({
+        title: "Blue",
         component: "blue",
         getGradient: function (col) { return [col.blue(0), col.blue(255)]; },
         colourProxy: colour
     }).data("colourComponentRGB");
     
     hSlider = $("#h-slider").colourComponentHSL({
+        title: "Hue",
         component: "hue",
         getGradient: function (col) {
             return [col.hue(0), col.hue(1/6), col.hue(1/3), col.hue(1/2),
@@ -334,6 +372,7 @@ $(function () {
     }).data("colourComponentHSL");
     
     sSlider = $("#s-slider").colourComponentHSL({
+        title: "Saturation",
         component: "saturation",
         getGradient: function (col) {
             return [col.saturation(0), col.saturation(1)];
@@ -342,6 +381,7 @@ $(function () {
     }).data("colourComponentHSL");
     
     lSlider = $("#l-slider").colourComponentHSL({
+        title: "Lightness",
         component: "lightness",
         getGradient: function (col) {
             return [col.lightness(0), col.lightness(0.5), col.lightness(1)];
@@ -392,10 +432,26 @@ $(function () {
         colourProxy: colour
     }).data("colourSwatchGroup");
 
+    shades = $("#swatch-shades").colourSwatchGroup({
+        makeColours: function (colour) {
+            return [
+                colour.darken(0.5),
+                colour.darken(0.25),
+                colour,
+                colour.lighten(0.25),
+                colour.lighten(0.5)
+            ];
+        },
+        colourProxy: colour
+    }).data("colourSwatchGroup");
+
     $("#swatches").accordion({
         header: "> h3",
-        //autoHeight: false,
-        fillSpace: true
+        autoHeight: false,
+        fillSpace: true,
+        changestart: function (event, ui) {
+            ui.newContent.colourSwatchGroup("update", colour, true);
+        }
     });
     
     colour.change();
