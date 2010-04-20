@@ -19,7 +19,7 @@ var hover = '',
 	buttonRegex = /hide|auto|fast|slow|(\d+)/,
 	buttonDefault = 'show',
 	//uiSpinnerClasses = 'ui-spinner ui-state-default ui-widget ui-widget-content ui-corner-all ';
-	uiSpinnerClasses = 'ui-spinner ui-widget ui-widget-content ui-corner-all ';
+	uiSpinnerClasses = 'ui-spinner ui-widget ui-corner-all ';
 
 $.widget('ui.spinner', {
 	_create: function() {		
@@ -139,6 +139,7 @@ $.widget('ui.spinner', {
 					$(this).addClass(active);
 					uiSpinner.addClass(active);
 				}
+				return true;
 			})
 			.bind('mouseup', function(event) {
 				if (self.counter == 1) {
