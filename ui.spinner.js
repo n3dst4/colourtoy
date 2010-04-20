@@ -242,6 +242,7 @@ $.widget('ui.spinner', {
 						case pageDown:
 							buttons.removeClass(active)
 							self._stopSpin();
+							self._trigger("stop", null, null);
 							inKeyDown = false;
 							return false;
 					}
@@ -296,7 +297,6 @@ $.widget('ui.spinner', {
 			if (hoverDelay) {
 				// don't do anything if trying to set the same callback again
 				if (callback === hoverDelayCallback) return;
-				
 				clearTimeout(hoverDelay);
 			}
 			
@@ -329,6 +329,7 @@ $.widget('ui.spinner', {
 			if (inMouseDown) {
 				$(this).removeClass(active);
 				self._stopSpin();
+				self._trigger("stop", null, null);
 				inMouseDown = false;
 			}
 			return false;
@@ -435,6 +436,7 @@ $.widget('ui.spinner', {
 	// stops the spin timer
 	_stopSpin: function() {
 		if (this.timer) {
+			//debugger;
 			clearInterval(this.timer);
 			this.timer = 0;
 		}
@@ -456,6 +458,8 @@ $.widget('ui.spinner', {
 			self.incCounter = 0;
 			self._setTimer(increment[0].delay, dir, large);
 		}
+		this._trigger("start", null, null);
+
 	},
 	
 	// called by timer for each step in the spin
@@ -485,6 +489,7 @@ $.widget('ui.spinner', {
 			value = (step > 0 ? self.options.min : self.options.max) || 0;
 		
 		self._setValue(value + step);
+		this._trigger("spin", null, null);
 	},
 	
 	// Parse the value currently in the field
@@ -520,7 +525,7 @@ $.widget('ui.spinner', {
 		
 		if (isNaN(value))
 			value = self.curvalue;
-
+		self._trigger("change", null, null);
 		self._setValue(value);
 	},
 	
@@ -562,9 +567,11 @@ $.widget('ui.spinner', {
 		self.curvalue = value = self._validate(value);
 
 		self.selfChange = true;
+		console.log("setting selfChange = true");
 		self.element.val(value != null ? 
 			self.options.format(value, self.places, self.element) :
 			'').change();
+		console.log("setting selfChange = false");
 		self.selfChange = false;
 	},
 

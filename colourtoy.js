@@ -17,12 +17,18 @@ $.widget("ui.colourComponent", {
         this.element.addClass("colour-component");
         self.queuedUpdate = null; // used when loading excanvas late
         // Create slider
-        this.sliderDiv = $("<span/>").addClass("colour-component-slider").appendTo(this.element);
+        this.sliderDiv = $("<span/>")
+            .addClass("colour-component-slider")
+            .appendTo(this.element);
         this.slider = this.sliderDiv.slider({
             min: 0,
             max: this.options.scale,
             step: this.options.step,
             slide: function (event, ui) {
+                self.options.colourProxy.set(
+                    self.options.colourProxy[self.options.component](ui.value), true);
+            },
+            stop: function (event, ui) {
                 self.options.colourProxy.set(
                     self.options.colourProxy[self.options.component](ui.value));
             }
@@ -42,17 +48,58 @@ $.widget("ui.colourComponent", {
         
         // Create input/spinner
         this.input = $("<input/>")
-        .appendTo(this.element)
-        .spinner({
+        .appendTo(this.element);
+        //*
+        this.input.spinner({
             min: 0,
             max: this.options.scale,
             step: this.options.step,
-            places: this.options.places
+            places: this.options.places,
+            start: function () {
+                console.log("starting");
+            },
+            spinchange: function (event, ui) {
+                console.log("spinchanged");
+                self.options.colourProxy.set(
+                    self.options.colourProxy[self.options.component](
+                        self.input.val()
+                   )
+                );
+            },
+            change: function (event, ui) {
+                console.log("changed");
+                //debugger;
+                self.options.colourProxy.set(
+                    self.options.colourProxy[self.options.component](
+                        self.input.spinner("value")
+                   )
+                );
+            },
+            spin: function (event, ui) {
+                //debugger;
+                //console.log("spinner spin callback");
+                self.options.colourProxy.set(
+                    self.options.colourProxy[self.options.component](
+                        ui.value
+                   ), true
+                );
+            }
             
-        })
-        .bind("change", function () {
-            self.options.colourProxy.set(self.options.colourProxy[self.options.component](self.input.val()));
         });
+        //*/
+        /*
+        this.input.bind("change", function () {
+            //debugger;
+            console.log("spinner change " + self.input.data("spinner").selfChange);
+            //if (self.input.data("spinner").selfChange) return;
+            self.options.colourProxy.set(
+                self.options.colourProxy[self.options.component](
+                    self.input.val()
+               )
+            );
+        });
+        //*/
+        ;
         
         // Create titles
         this.leftHeader = $("<h4/>")
@@ -96,7 +143,6 @@ $.widget("ui.colourComponent", {
     
     update: function (colour) {
         var stops, value = colour[this.options.component]();
-        this.input.val(value.toFixed(this.options.places));
         this.slider.value(value);
         if (this.ctx) {
             stops = this.options.getGradient(colour);
@@ -104,7 +150,9 @@ $.widget("ui.colourComponent", {
             for (i=0; i < stops.length; i++) {
                 try {
                     grad.addColorStop(i * (1/(stops.length-1)), stops[i].toString());
-                } catch (e) { debugger;}
+                } catch (e) {
+                    return; // can't do anything - bail
+                }
             }
             this.ctx.fillStyle = grad;
             this.ctx.fillRect(0,0,255,20);
@@ -112,6 +160,7 @@ $.widget("ui.colourComponent", {
         else {
             this.queuedUpdate = colour;
         }
+        this.input.spinner("value", value.toFixed(this.options.places));
         var leftHeaderColour = stops[0].contrast().toString();
         var rightHeaderColour = stops.slice(-1)[0].contrast().toString();
         
@@ -244,6 +293,8 @@ function ColourProxy (colour) {
     this.colour = new Colour(colour || "#000");
     this.updateQueued = false;
     this.changeCallbacks = [];
+    this.historyCallbacks = [];
+    this.historyList = [];
     for (f in Colour.prototype) {
         if (Object.prototype.toString.call(Colour.prototype[f]) === "[object Function]") {
             (function (f) {
@@ -256,7 +307,18 @@ function ColourProxy (colour) {
     }
 }
 ColourProxy.prototype = {
-    set: function (colour) {
+    set: function (colour, noHistory) {
+        var self = this;
+        // history
+        if (noHistory) {
+            if ( ! self.histColour) { self.histColour = self.colour; }
+        }
+        else {
+            self.historyList.push(self.histColour || self.colour);
+            self.histColour = null;
+            self._history();
+        }
+        // update
         this.colour = colour;
         this._change();
     },
@@ -278,6 +340,19 @@ ColourProxy.prototype = {
             }, 0);
             this.updateQueued = true;
         }        
+    },
+    history: function (f) {
+        if (f) this.historyCallbacks.push(f);
+        else this._history();
+    },
+    _history: function () {
+        var i, self = this;
+        for (i=0; i < self.historyCallbacks.length; i++) {
+            self.historyCallbacks[i].call(self.historyList, self.historyList);
+        }
+    },
+    undo: function () {
+        
     },
     toString: function () {
         return this.colour.toString();
@@ -313,6 +388,7 @@ $(function () {
     var rSlider, gSlider, bSlider, hSlider, sSlider, lSlider, invert,
         mainSwatch = $("#main-swatch"),
         mainReadOut = $("#main-readout"),
+        historyPane = $("#history");
         updateQueued = false,
         colour = new ColourProxy("hotpink");
         
@@ -326,6 +402,12 @@ $(function () {
             }
             catch (e2) { /* can't interpret entry, so do nothing */ }
         }
+    });
+    
+    colour.history(function(history) {
+        historyPane.append($("<p/>").html(
+            $.map(history, function (c) { return c.toString(); }).join(", ")
+        ));
     });
         
     colour.change(function () {
@@ -347,6 +429,7 @@ $(function () {
         colourProxy: colour
     }).data("colourComponentRGB");
     
+    //*
     gSlider = $("#g-slider").colourComponentRGB({
         title: "Green",
         component: "green",
@@ -388,7 +471,7 @@ $(function () {
         },
         colourProxy: colour
     }).data("colourComponentHSL");
-    
+    //*/
     variants = $("#swatch-variants").colourSwatchGroup({
         makeColours: function (colour) {
             return [colour, colour.invert(), colour.complement(), colour.desaturate()];
@@ -454,6 +537,7 @@ $(function () {
         }
     });
     
+    console.log("about to fire first global boot change");
     colour.change();
 });    
 
