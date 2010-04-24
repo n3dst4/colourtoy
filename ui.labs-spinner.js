@@ -99,7 +99,6 @@ $.widget('ui.spinner', {
 				var direction = $(this).hasClass('ui-spinner-up') ? 1 : -1;
 				self._stop();
 				self.source = "mouse";
-				console.log("mousedown");
 				self._spin(direction, event.shiftKey);
 				
 				if (!self.options.disabled) {

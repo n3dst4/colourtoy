@@ -3,7 +3,9 @@
 var updateSwatch, needUpdate = false,
     console = global.console || {log: function(){}},
     maxTries = 8,
-    tryDelayFactor = 50;
+    tryDelayFactor = 50,
+    histSize = 500 // fits in a cookie nicely
+    ;
 
 
 /*
@@ -56,7 +58,6 @@ $.widget("ui.colourComponent", {
             step: this.options.step,
             precision: this.options.places,
             change: function (event, ui) {
-                //console.log("changed " + ui.spinning);
                 self.options.colourProxy.set(
                     self.options.colourProxy[self.options.component](
                         self.input.spinner("value")
@@ -64,25 +65,12 @@ $.widget("ui.colourComponent", {
                 );
             },
             stop: function (event, ui) {
-                //console.log("stopped");
                 self.options.colourProxy.set(
                     self.options.colourProxy[self.options.component](
                         self.input.spinner("value")
                    )
                 );
             }
-        });
-        //*/
-        /*
-        this.input.bind("change", function () {
-            //debugger;
-            console.log("spinner change " + self.input.data("spinner").selfChange);
-            //if (self.input.data("spinner").selfChange) return;
-            self.options.colourProxy.set(
-                self.options.colourProxy[self.options.component](
-                    self.input.val()
-               )
-            );
         });
         //*/
         ;
@@ -142,14 +130,15 @@ $.widget("ui.colourComponent", {
             }
             this.ctx.fillStyle = grad;
             this.ctx.fillRect(0,0,255,20);
+            var leftHeaderColour = stops[0].contrast().toString();
+            var rightHeaderColour = stops.slice(-1)[0].contrast().toString();
+            this.leftHeader.css("color", leftHeaderColour);
+            this.rightHeader.css("color", rightHeaderColour);        
         }
         else {
             this.queuedUpdate = colour;
         }
         this.input.spinner("value", value, true);
-        var leftHeaderColour = stops[0].contrast().toString();
-        var rightHeaderColour = stops.slice(-1)[0].contrast().toString();
-        
         var handlePos = this.handle.position().left;
         
         if (handlePos > 120 && this.shownHeader == "right") {
@@ -162,10 +151,8 @@ $.widget("ui.colourComponent", {
             this.leftHeader.stop(false, true).hide();
             this.shownHeader = "right";
         }
-        
-        this.leftHeader.css("color", leftHeaderColour);
-        this.rightHeader.css("color", rightHeaderColour);
     }
+        
 });
 $.ui.colourComponent.prototype.options = {
     scale: 255,
@@ -371,12 +358,15 @@ $(function () {
 
 
 $(function () {
-    var rSlider, gSlider, bSlider, hSlider, sSlider, lSlider, invert,
+    var i, h, rSlider, gSlider, bSlider, hSlider, sSlider, lSlider, invert,
         mainSwatch = $("#main-swatch"),
         mainReadOut = $("#main-readout"),
         historyPane = $("#history");
         updateQueued = false,
-        colour = new ColourProxy("hotpink");
+        histCookie = readCookie("colour-history"),
+        histList = histCookie?histCookie.split(","):[],
+        currCookie = readCookie("current-colour"),
+        colour = new ColourProxy(currCookie || "hotpink");
         
     mainReadOut.change(function () {
         try {
@@ -393,11 +383,35 @@ $(function () {
     colour.history(function(history) {
         //debugger;
         //historyPane.animate({"background-color": "#ff0"}, "fast").animate({"background-color": "#000"}, "fast");
-        historyPane.append($("<p/>").html(
-            "X"//$.map(history, function (c) { return c.toString(); }).join(", ")
-        ));
+        $("<div/>")
+            .addClass("colour-history-swatch ui-corner-all")
+            .css({
+                "background-color": history.slice(-1)[0].toString()
+            })
+            .prependTo(historyPane)
+            .hide()
+            .slideDown()
+        historyPane.children(":gte("+histSize+")").remove();
     });
-        
+    
+    colour.history(function(history) {
+        createCookie("colour-history", $.map(history, function(colour){return colour.toString()}).slice(-histSize).join(","), 365);
+    });
+    
+    historyPane.delegate(".colour-history-swatch", "click", function (event) {
+        colour.set(Colour($(event.target).css("background-color")));
+    });
+
+    // restore history    
+    h = [];
+    colour.historyList = $.map(histList, function(str){return Colour(str);});
+    i = histList.length;
+    while (i--) {
+        h.push("<div class='colour-history-swatch ui-corner-all' style='background-color: ", histList[i],
+               ";'/>");
+    }
+    historyPane.append(h.join(""));
+    
     colour.change(function () {
         mainSwatch.css({
             "background-color": colour.toString(),
@@ -408,6 +422,7 @@ $(function () {
             "background": colour.toString() + " none",
             "color": colour.contrast().toString()
         }).val(colour.toString());
+        createCookie("current-colour", colour.toString(), 365);
     });
     
     rSlider = $("#r-slider").colourComponentRGB({
@@ -525,10 +540,34 @@ $(function () {
         }
     });
     
-    console.log("about to fire first global boot change");
     colour.change();
 });    
 
+
+function createCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+function eraseCookie(name) {
+	createCookie(name,"",-1);
+}
 
 
 }(jQuery, this));
