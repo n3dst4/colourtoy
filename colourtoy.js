@@ -391,8 +391,10 @@ $(function () {
     });
     
     colour.history(function(history) {
+        //debugger;
+        //historyPane.animate({"background-color": "#ff0"}, "fast").animate({"background-color": "#000"}, "fast");
         historyPane.append($("<p/>").html(
-            $.map(history, function (c) { return c.toString(); }).join(", ")
+            "X"//$.map(history, function (c) { return c.toString(); }).join(", ")
         ));
     });
         

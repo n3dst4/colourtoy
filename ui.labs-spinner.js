@@ -99,6 +99,7 @@ $.widget('ui.spinner', {
 				var direction = $(this).hasClass('ui-spinner-up') ? 1 : -1;
 				self._stop();
 				self.source = "mouse";
+				console.log("mousedown");
 				self._spin(direction, event.shiftKey);
 				
 				if (!self.options.disabled) {
@@ -118,7 +119,14 @@ $.widget('ui.spinner', {
 			}, function (event) {
 				$(this).removeClass(active + ' ' + hover);
 			});
-					
+			
+		// ie doesn't fire mousedown on 2nd click, so have to fake it
+		if ($.browser.msie) {
+			this.buttons.bind("dblclick", function () {
+				$(this).trigger("mousedown")
+					.trigger("mouseup");
+			});
+		}
 		self.uiSpinner = uiSpinner;
 	},
 	_uiSpinnerHtml: function () {
@@ -185,13 +193,9 @@ $.widget('ui.spinner', {
 			this.spinStage++;
 		}
 		inc = o.increments[this.spinStage];
-		
+
 		next = o.next(this.currVal, inc[paging?"page":"increment"], direction, o.min, o.max);
-		if (this.stopped) {
-			this.stopped = false;
-		}
-		else if (next !== false) {
-			if (this.timer) { clearTimeout (this.timer); }
+		if (next !== false) {
 			this.timer = setTimeout(function () {self._spin(direction, paging)}, inc.delay);
 			this.value(next);
 			this.spinCounter++;
@@ -200,8 +204,7 @@ $.widget('ui.spinner', {
 	
 	_stop: function () {
 		if (this.timer) {
-			//clearTimeout(this.timer);
-			this.stopped = true;
+			clearTimeout (this.timer);
 			this.source = this.timer = this.spinCounter = this.spinStage = null;
 			this._trigger("stop", null, {value: this.currVal});
 		}
@@ -218,11 +221,15 @@ $.widget('ui.spinner', {
 					{value: newVal, spinning: !!this.timer});
 			}
 			this.element.val(this._formatted());
+			this._aria();
 		}
 	},
 	
 	_readValue: function () {
-		this.value(this.options.parse(this.element.val()));
+		var newVal = this.options.parse(this.element.val());
+		if (newVal != this._formatted()) {
+			this.value(newVal);
+		}
 	},
 	
 	
@@ -261,7 +268,7 @@ $.widget('ui.spinner', {
 			&& this.uiSpinner
 				.attr('aria-valuemin', opts.format(opts.min))
 				.attr('aria-valuemax', opts.format(opts.max))
-				.attr('aria-valuenow', this.value());
+				.attr('aria-valuenow', this._formatted());
 	},
 	
 	destroy: function() {
