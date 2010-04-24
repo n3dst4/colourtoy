@@ -54,37 +54,23 @@ $.widget("ui.colourComponent", {
             min: 0,
             max: this.options.scale,
             step: this.options.step,
-            places: this.options.places,
-            start: function () {
-                console.log("starting");
-            },
-            spinchange: function (event, ui) {
-                console.log("spinchanged");
+            precision: this.options.places,
+            change: function (event, ui) {
+                console.log("changed " + ui.spinning);
                 self.options.colourProxy.set(
                     self.options.colourProxy[self.options.component](
-                        self.input.val()
-                   )
+                        self.input.spinner("value")
+                   ), ui.spinning
                 );
             },
-            change: function (event, ui) {
-                console.log("changed");
-                //debugger;
+            stop: function (event, ui) {
+                console.log("stopped");
                 self.options.colourProxy.set(
                     self.options.colourProxy[self.options.component](
                         self.input.spinner("value")
                    )
                 );
-            },
-            spin: function (event, ui) {
-                //debugger;
-                //console.log("spinner spin callback");
-                self.options.colourProxy.set(
-                    self.options.colourProxy[self.options.component](
-                        ui.value
-                   ), true
-                );
             }
-            
         });
         //*/
         /*
@@ -160,7 +146,7 @@ $.widget("ui.colourComponent", {
         else {
             this.queuedUpdate = colour;
         }
-        this.input.spinner("value", value.toFixed(this.options.places));
+        this.input.spinner("value", value, true);
         var leftHeaderColour = stops[0].contrast().toString();
         var rightHeaderColour = stops.slice(-1)[0].contrast().toString();
         
@@ -429,14 +415,14 @@ $(function () {
         colourProxy: colour
     }).data("colourComponentRGB");
     
-    //*
+    
     gSlider = $("#g-slider").colourComponentRGB({
         title: "Green",
         component: "green",
         getGradient: function (col) { return [col.green(0), col.green(255)]; },
         colourProxy: colour
     }).data("colourComponentRGB");
-    
+    //* 
     bSlider = $("#b-slider").colourComponentRGB({
         title: "Blue",
         component: "blue",
