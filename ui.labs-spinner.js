@@ -54,7 +54,8 @@ $.widget('ui.spinner', {
 				return self._keyUp(event);
 			})
 			.bind('blur'+namespace, function(event) {
-				//self._stop();
+				if (self.source == "keyboard") { self._stop(); }
+				self._readValue();
 			})
 			.parent()
 				// add buttons
@@ -67,10 +68,7 @@ $.widget('ui.spinner', {
 				.hover(function() {
 					self._hide(false);
 				}, function() {
-					//self._stop();
-					$(this).removeClass(hover);
-					self.hovered = false;
-					self._hide(true);
+					if (self.source == "mouse") { self._stop(); }
 				});
 
 		// TODO: need a better way to exclude IE8 without resorting to $.browser.version
@@ -100,6 +98,7 @@ $.widget('ui.spinner', {
 			.bind('mousedown', function (event) {
 				var direction = $(this).hasClass('ui-spinner-up') ? 1 : -1;
 				self._stop();
+				self.source = "mouse";
 				self._spin(direction, event.shiftKey);
 				
 				if (!self.options.disabled) {
@@ -150,6 +149,7 @@ $.widget('ui.spinner', {
 			direction = (key == KEYS.UP
 						|| key == KEYS.PAGE_UP
 						|| key == KEYS.RIGHT) ? 1 : -1;
+			this.source = "keyboard";
 			this._spin(direction, paging);
 			return false;
 		}
@@ -187,8 +187,10 @@ $.widget('ui.spinner', {
 		inc = o.increments[this.spinStage];
 		
 		next = o.next(this.currVal, inc[paging?"page":"increment"], direction, o.min, o.max);
-		
-		if (next !== false) {
+		if (this.stopped) {
+			this.stopped = false;
+		}
+		else if (next !== false) {
 			if (this.timer) { clearTimeout (this.timer); }
 			this.timer = setTimeout(function () {self._spin(direction, paging)}, inc.delay);
 			this.value(next);
@@ -198,10 +200,11 @@ $.widget('ui.spinner', {
 	
 	_stop: function () {
 		if (this.timer) {
-			clearTimeout(this.timer);
-			this.timer = this.spinCounter = this.spinStage = null;
+			//clearTimeout(this.timer);
+			this.stopped = true;
+			this.source = this.timer = this.spinCounter = this.spinStage = null;
 			this._trigger("stop", null, {value: this.currVal});
-		}		
+		}
 	},
 	
 	value: function (newVal, suppressEvent) {

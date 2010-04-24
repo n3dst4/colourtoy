@@ -56,7 +56,7 @@ $.widget("ui.colourComponent", {
             step: this.options.step,
             precision: this.options.places,
             change: function (event, ui) {
-                console.log("changed " + ui.spinning);
+                //console.log("changed " + ui.spinning);
                 self.options.colourProxy.set(
                     self.options.colourProxy[self.options.component](
                         self.input.spinner("value")
@@ -64,7 +64,7 @@ $.widget("ui.colourComponent", {
                 );
             },
             stop: function (event, ui) {
-                console.log("stopped");
+                //console.log("stopped");
                 self.options.colourProxy.set(
                     self.options.colourProxy[self.options.component](
                         self.input.spinner("value")
