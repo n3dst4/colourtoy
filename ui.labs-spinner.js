@@ -194,7 +194,7 @@ $.widget('ui.spinner', {
 		}
 		inc = o.increments[this.spinStage];
 
-		next = o.next(this.currVal, inc[paging?"page":"increment"], direction, o.min, o.max);
+		next = o.next(this.currVal, inc[paging?"page":"increment"], direction, o.min, o.max, o.step);
 		if (next !== false) {
 			this.timer = setTimeout(function () {self._spin(direction, paging)}, inc.delay);
 			this.value(next);
@@ -325,6 +325,7 @@ $.extend($.ui.spinner.prototype, {
 		min: null,
 		max: null,
 		dir: "ltr",
+		step: 1,
 		showButtons: "always",
 		buttonWidth: 16,
 		increments: [{count: 2, increment: 1, page: 10, delay: 500},
@@ -336,10 +337,10 @@ $.extend($.ui.spinner.prototype, {
 		parse: function (text) {
 			return parseFloat(text);
 		},
-		next: function (currentValue, amount, direction, min, max) {
+		next: function (currentValue, amount, direction, min, max, step) {
 			return ((direction > 0 && currentValue == max)
 					|| (direction < 0 && currentValue == min)) ? false :
-				Math.max(min, Math.min(max, currentValue + amount * direction)); 
+				Math.max(min, Math.min(max, currentValue + amount * step * direction)); 
 		}		
 	}
 });
