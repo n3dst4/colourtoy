@@ -4,8 +4,8 @@ var updateSwatch, needUpdate = false,
     console = global.console || {log: function(){}},
     maxTries = 8,
     tryDelayFactor = 50,
-    histSize = 500 // fits in a cookie nicely
-    ;
+    histSize = 500, // fits in a cookie nicely
+    settings;
 
 
 /*
@@ -335,25 +335,89 @@ ColourProxy.prototype = {
 
 
 /*
+ * Settings holder
+ */
+function Settings (cookieName, days) {
+    this._cookieName = cookieName = cookieName || "settings";
+    this._days = days || 354
+    try {
+        this._settings = JSON.parse(this._readCookie());
+    }
+    catch (e) {}
+    this._settings = this._settings || {};
+}
+Settings.prototype = {
+    get: function (key, defaultValue) {
+        return this._settings[key] || defaultValue || null;
+    },
+    set: function (key, value) {
+        this._settings[key] = value;
+        this._createCookie(JSON.stringify(this._settings), 365);
+    },
+    destroy: function () {
+        this._eraseCookie();
+        this._settings = {};
+    },
+    _createCookie: function (value) {
+        var date = new Date();
+        date.setTime(date.getTime() + (this._days * 24 * 60 * 60 * 1000));
+        var expires = "; expires="+date.toGMTString();
+        document.cookie = this._cookieName+"="+value+expires+"; path=/";
+    },
+    _readCookie: function (name) {
+        var nameEQ = this._cookieName + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    },
+    _eraseCookie: function () {
+        createCookie(this._cookieName,"",-1);
+    }
+};
+
+
+/*
  * onLoad
  */
+
 $(function () {
-    var themeButtons = $("[name=theme]");
-    $("#select-dark").attr("checked", "checked");
+    settings = new Settings();
+});
+
+/*
+ * Set up theme
+ */
+$(function () {
+    var themeButtons = $("[name=theme]"),
+        themeName = settings.get("theme", "dark-theme");
+        
+    if (themeName == "light-theme") {
+        $("#select-light").attr("checked", "checked");
+    }
+    else {
+        $("#select-dark").attr("checked", "checked");
+    }
+    
     $("#theme-select").buttonset({text: true});
-    function selectTheme (event) {
-        $("link[class*=theme]").each(function () {
+    themeButtons.change(function (event) { selectTheme(event.target.value); });
+    selectTheme(themeName);
+    
+    function selectTheme (themeName) {
+        $("link.theme").each(function () {
             var el = $(this);
-            if (el.attr("class") == event.target.value) {
+            if (el.hasClass(themeName)) {
                 el.attr("media", "screen");
             }
             else {
                 el.attr("media", "none");
             }
-            console.log(event.target.value);
         });
+        settings.set("theme", themeName);
     }
-    themeButtons.change(selectTheme);
 });
 
 
@@ -365,8 +429,8 @@ $(function () {
         updateQueued = false,
         histCookie = readCookie("colour-history"),
         histList = histCookie?histCookie.split(","):[],
-        currCookie = readCookie("current-colour"),
-        colour = new ColourProxy(currCookie || "hotpink");
+        colour = new ColourProxy(settings.get("current-colour", "hotpink")),
+        accordionSelection = settings.get("accordion");
         
     mainReadOut.change(function () {
         try {
@@ -422,7 +486,7 @@ $(function () {
             "background": colour.toString() + " none",
             "color": colour.contrast().toString()
         }).val(colour.toString());
-        createCookie("current-colour", colour.toString(), 365);
+        settings.set("current-colour", colour.toString());
     });
     
     rSlider = $("#r-slider").colourComponentRGB({
@@ -531,12 +595,18 @@ $(function () {
         colourProxy: colour
     }).data("colourSwatchGroup");
 
+    if (accordionSelection){ accordionSelection = $(accordionSelection).prev(); }
+    else { accordionSelection = 0;}
+
     $("#swatches").accordion({
         header: "> h3",
         autoHeight: false,
         fillSpace: true,
+        active: accordionSelection,
         changestart: function (event, ui) {
             ui.newContent.colourSwatchGroup("update", colour, true);
+            console.log(ui.newContent.attr("id"));
+            settings.set("accordion", "#" + ui.newContent.attr("id"));
         }
     });
     

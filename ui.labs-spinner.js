@@ -66,7 +66,7 @@ $.widget('ui.spinner', {
 					"margin-right": marginRight				
 				})				
 				.hover(function() {
-					self._hide(false);
+					//self._hide(false);
 				}, function() {
 					if (self.source == "mouse") { self._stop(); }
 				});
