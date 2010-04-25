@@ -2,7 +2,7 @@ body { font-family: sans-serif; font-size: 10px; height: 100%;}
 
 .page-bar {height: 16px; padding: 4px; line-height: 16px; margin-bottom: 1em;}
 
-.page-bar h1 {background: none; float: left;}
+.page-bar h1 {background: none; float: left; font-size: 1.6em; font-weight: bold; color: #ddd; text-shadow: black 0px 0px 3px;}
 
 .toolbar-item { height: 16px; vertical-align: middle; background:  none;}
 
@@ -59,7 +59,7 @@ body { font-family: sans-serif; font-size: 10px; height: 100%;}
 .colour-pane-short { height: 180px; }
 
 
-.colour-swatch {width: 60px; height: 70px; position: relative; margin: 0px 3px 1.5em 0px;
+.colour-swatch {width: 60px; height: 60px; position: relative; margin: 0px 3px 1.5em 0px;
     display: inline-block; cursor: pointer; }
 
 .colour-swatch-readout { display: block; position: absolute; bottom: -1.2em; right: 0em;
@@ -68,7 +68,7 @@ body { font-family: sans-serif; font-size: 10px; height: 100%;}
 .colour-swatch-title { padding: 0.2em 0.5em; font-size: small; font-weight: normal;}
 
 
-#history {height: 160px; overflow: auto;}
+#qhistory {height: 160px; overflow: auto;}
 .colour-history-swatch {width: 90%; height: 16px; margin: 0px 2px 0.5em 0px;
     cursor: pointer; }
 
