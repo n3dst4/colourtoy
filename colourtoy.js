@@ -429,8 +429,7 @@ $(function () {
         updateQueued = false,
         histCookie = readCookie("colour-history"),
         histList = histCookie?histCookie.split(","):[],
-        colour = new ColourProxy(settings.get("current-colour", "hotpink")),
-        accordionSelection = settings.get("accordion");
+        colour = new ColourProxy(settings.get("current-colour", "hotpink"));
         
     mainReadOut.change(function () {
         try {
@@ -595,6 +594,14 @@ $(function () {
         colourProxy: colour
     }).data("colourSwatchGroup");
 
+    
+    colour.change();
+});
+
+
+$(function(){
+    var resizeTimer,
+        accordionSelection = settings.get("accordion");
     if (accordionSelection){ accordionSelection = $(accordionSelection).prev(); }
     else { accordionSelection = 0;}
 
@@ -610,8 +617,14 @@ $(function () {
         }
     });
     
-    colour.change();
-});    
+    $(window).bind("resize", function (event) {
+        if (resizeTimer) {clearTimeout(resizeTimer);}
+        resizeTimer = setTimeout(function(){
+            $("#swatches").accordion("resize");
+            resizeTimer = null;
+        }, 100);
+    });
+});
 
 
 function createCookie(name,value,days) {

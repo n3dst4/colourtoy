@@ -3,7 +3,7 @@
 <head>
     <title>Colour Toy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"  />
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"  />-->
     
     <link id="reset-sheet" rel="stylesheet" href="html5reset-1.4.1.css" type="text/css" />
 
@@ -43,42 +43,43 @@
 			<input type="radio" id="select-dark" name="theme" checked="checked" value="dark-theme" /><label for="select-dark">Dark</label>
 		</div>
     </div>
-    <div class="ui-widget-content ui-helper-reset colour-pane colour-pane-tall">
-        <div id="main-swatch" class="ui-corner-all"><input id="main-readout"></div>
-        <div id="rgb-sliders">
-            <h3 class="subtitle">RGB</h3>
-            <div id="r-slider"></div>
-            <div id="g-slider"></div>
-            <div id="b-slider"></div>
+    <div class="page-body">
+        <div class="ui-widget-content ui-helper-reset colour-pane colour-pane-tall">
+            <div id="main-swatch" class="ui-corner-all"><input id="main-readout"></div>
+            <div id="rgb-sliders">
+                <h3 class="subtitle">RGB</h3>
+                <div id="r-slider"></div>
+                <div id="g-slider"></div>
+                <div id="b-slider"></div>
+            </div>
+            <div id="hsl-sliders">
+                <h3 class="subtitle">HSL</h3>
+                <div id="h-slider"></div>
+                <div id="s-slider"></div>
+                <div id="l-slider"></div>
+            </div>
         </div>
-        <div id="hsl-sliders">
-            <h3 class="subtitle">HSL</h3>
-            <div id="h-slider"></div>
-            <div id="s-slider"></div>
-            <div id="l-slider"></div>
+        <div class="ui-widget-content colour-pane  palette-dock">
+            <div id="swatches">
+                <h3><a href="#">Shades</a></h3>
+                <div id="swatch-shades"><!----></div>
+                <h3><a href="#">Analogues</a></h3>
+                <div id="swatch-analagous"><!----></div>
+                <h3><a href="#">Tetrad</a></h3>
+                <div id="swatch-tetrad"><!----></div>
+                <h3><a href="#">Rectangular tetrad</a></h3>
+                <div id="swatch-rect-tetrad"><!----></div>
+                <h3><a href="#">Triad</a></h3>
+                <div id="swatch-triad"><!----></div>
+                <h3><a href="#">Split complement</a></h3>
+                <div id="swatch-split"><!----></div>
+                <h3><a href="#">Other Variants</a></h3>
+                <div id="swatch-variants"><!----></div>
+                <h3><a href="#">History (most recent first)</a></h3>
+                <div id="history"><!----></div>
+            </div>
         </div>
-    </div>
-    <div class="ui-widget-content colour-pane colour-pane-tall">
-        <div id="swatches">
-            <h3><a href="#">Shades</a></h3>
-            <div id="swatch-shades"><!----></div>
-            <h3><a href="#">Analogues</a></h3>
-            <div id="swatch-analagous"><!----></div>
-            <h3><a href="#">Tetrad</a></h3>
-            <div id="swatch-tetrad"><!----></div>
-            <h3><a href="#">Rectangular tetrad</a></h3>
-            <div id="swatch-rect-tetrad"><!----></div>
-            <h3><a href="#">Triad</a></h3>
-            <div id="swatch-triad"><!----></div>
-            <h3><a href="#">Split complement</a></h3>
-            <div id="swatch-split"><!----></div>
-            <h3><a href="#">Other Variants</a></h3>
-            <div id="swatch-variants"><!----></div>
-            <h3><a href="#">History (most recent first)</a></h3>
-            <div id="history"><!----></div>
-        </div>
-    </div>
-    <!--<div class="ui-widget-content colour-pane colour-pane-short">-->
+        <!--<div class="ui-widget-content colour-pane colour-pane-short">-->
     </div>
 </body>
 </html>
