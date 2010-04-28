@@ -1,0 +1,12 @@
+.page-body {	
+    height: expression(document.body.clientHeight - 35);
+    width: 100%;
+    overflow: hidden;
+}
+
+.page-bag {
+    height: 100%;
+    width: expression(document.body.clientWidth - 340);
+}
+
+.accordion{ height: expression(document.body.clientHeight - 55);}

@@ -1,4 +1,38 @@
-body { font-family: sans-serif; font-size: 10px; height: 100%; overflow: hidden;}
+/*
+ * Layouty stuff
+ */
+html, body { margin: 0; padding: 0; overflow: hidden; }
+body { height: 100%; margin:0; padding: 0; }
+.page-bar{
+	position:absolute;
+    width: 100%;
+	left: 0;
+	right: 0;
+	top: 0;
+	height:30px;
+	overflow:visible;
+}
+.page-body{
+	overflow: auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 35px;
+	bottom: 0;
+}
+
+.accordion { position: absolute; float: none; top: 0; right: 10px;bottom: 10px; width: 310px; }
+
+.page-bag { position: absolute; top: 0; bottom: 0; left: 10px; right: 330px; text-align: center; }
+
+.colour-pane { display: inline-block; width: 310px; position: relative; }
+
+
+
+
+
+
+body { font-family: sans-serif; font-size: 10px; }
 
 .page-bar {height: 16px; padding: 4px; line-height: 16px; margin-bottom: 10px;}
 
@@ -11,7 +45,7 @@ body { font-family: sans-serif; font-size: 10px; height: 100%; overflow: hidden;
 .toolbar-item input, .toolbar-item label  { vertical-align: middle;}
 
 
-.page-body { position: absolute; top:30px; bottom: 0; left: 0; right: 0; overflow: hidden; }
+
 
 
 #main-swatch { width: 100%; height: 140px; background: black;
@@ -22,7 +56,7 @@ body { font-family: sans-serif; font-size: 10px; height: 100%; overflow: hidden;
     border: 1px solid white; text-align: right; width: 90px;
     font-family: "DejaVu Sans Mono", monospace; color: black;}
 
-.subtitle {margin-top: 20px; margin-bottom: 5px; }
+.subtitle {margin-top: 1em; margin-bottom: 5px; text-align: left;}
 
 
 .slider-label { position: absolute; top: 0px; left:5px; }
@@ -56,9 +90,7 @@ body { font-family: sans-serif; font-size: 10px; height: 100%; overflow: hidden;
     
 .colour-component canvas { position: absolute; top:0px; left:0px; width: 100%; height: 100%; }
 
-.colour-pane { float: left; width: 310px; padding: 5px; margin: 5px; position: relative; }
-.colour-pane-tall { height: 400px; }
-.colour-pane-short { height: 180px; }
+
 
 
 .colour-swatch {width: 60px; height: 60px; position: relative; margin: 0px 3px 1.5em 0px;
@@ -76,7 +108,6 @@ body { font-family: sans-serif; font-size: 10px; height: 100%; overflow: hidden;
 
 
 
-.palette-dock { position: absolute; float: none; top: 0; right: 0; bottom: 0;  }
 
 
 

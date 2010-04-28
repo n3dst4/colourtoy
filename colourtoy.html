@@ -24,6 +24,13 @@
     </style>
     <![endif]-->
     
+    <!--[if lte IE 6 ]>
+    <link rel="stylesheet" href="ie6.css" type="text/css" />
+    <style type="text/css">
+    
+    </style>
+    <![endif]-->
+    
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
     <script type="text/javascript" src="ui.labs-spinner.js"></script>
@@ -44,23 +51,27 @@
 		</div>
     </div>
     <div class="page-body">
-        <div class="ui-widget-content ui-helper-reset colour-pane colour-pane-tall">
+        <div class="page-bag">
             <div id="main-swatch" class="ui-corner-all"><input id="main-readout"></div>
-            <div id="rgb-sliders">
-                <h3 class="subtitle">RGB</h3>
-                <div id="r-slider"></div>
-                <div id="g-slider"></div>
-                <div id="b-slider"></div>
+            <div class="colour-pane ">
+                <div id="rgb-sliders">
+                    <h3 class="subtitle">RGB</h3>
+                    <div id="r-slider"></div>
+                    <div id="g-slider"></div>
+                    <div id="b-slider"></div>
+                </div>
             </div>
-            <div id="hsl-sliders">
-                <h3 class="subtitle">HSL</h3>
-                <div id="h-slider"></div>
-                <div id="s-slider"></div>
-                <div id="l-slider"></div>
+            <div class="colour-pane">
+                <div id="hsl-sliders">
+                    <h3 class="subtitle">HSL</h3>
+                    <div id="h-slider"></div>
+                    <div id="s-slider"></div>
+                    <div id="l-slider"></div>
+                </div>
             </div>
         </div>
-        <div class="ui-widget-content colour-pane  palette-dock">
-            <div id="swatches">
+        <div class="accordion">
+            <div id="swatches" style="display:block;">
                 <h3><a href="#">Shades</a></h3>
                 <div id="swatch-shades"><!----></div>
                 <h3><a href="#">Analogues</a></h3>
