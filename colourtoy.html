@@ -43,54 +43,67 @@
     
 </head>
 <body>
-    <div class="ui-widget-header page-bar">
-        <h1>Colour Toy</h1>
-        <div id="theme-select" class="toolbar-item toolbar-item-right">
-			<input type="radio" id="select-light" name="theme" value="light-theme" /><label for="select-light">Light</label>
-			<input type="radio" id="select-dark" name="theme" checked="checked" value="dark-theme" /><label for="select-dark">Dark</label>
-		</div>
-    </div>
-    <div class="page-body">
-        <div class="page-bag">
-            <div id="main-swatch" class="ui-corner-all"><input id="main-readout"></div>
-            <div class="colour-pane ">
-                <div id="rgb-sliders">
-                    <h3 class="subtitle">RGB</h3>
-                    <div id="r-slider"></div>
-                    <div id="g-slider"></div>
-                    <div id="b-slider"></div>
-                </div>
-            </div>
-            <div class="colour-pane">
-                <div id="hsl-sliders">
-                    <h3 class="subtitle">HSL</h3>
-                    <div id="h-slider"></div>
-                    <div id="s-slider"></div>
-                    <div id="l-slider"></div>
-                </div>
+    <div class="outer-wrapper">
+        <div class="ui-widget-header page-bar">
+            <h1>Colour Toy</h1>
+            <div id="theme-select" class="toolbar-item toolbar-item-right">
+                <input type="radio" id="select-light" name="theme" value="light-theme" />
+                <label for="select-light">Light</label>
+                <input type="radio" id="select-dark" name="theme" checked="checked" value="dark-theme" />
+                <label for="select-dark">Dark</label>
             </div>
         </div>
-        <div class="accordion">
-            <div id="swatches" style="display:block;">
-                <h3><a href="#">Shades</a></h3>
-                <div id="swatch-shades"><!----></div>
-                <h3><a href="#">Analogues</a></h3>
-                <div id="swatch-analagous"><!----></div>
-                <h3><a href="#">Tetrad</a></h3>
-                <div id="swatch-tetrad"><!----></div>
-                <h3><a href="#">Rectangular tetrad</a></h3>
-                <div id="swatch-rect-tetrad"><!----></div>
-                <h3><a href="#">Triad</a></h3>
-                <div id="swatch-triad"><!----></div>
-                <h3><a href="#">Split complement</a></h3>
-                <div id="swatch-split"><!----></div>
-                <h3><a href="#">Other Variants</a></h3>
-                <div id="swatch-variants"><!----></div>
-                <h3><a href="#">History (most recent first)</a></h3>
-                <div id="history"><!----></div>
+        <div class="page-body">
+            <div class="page-bag">
+                <div id="main-swatch" class="ui-corner-all">
+                    <input id="main-readout" />
+                    <button id="save-colour">Save colour</button>
+                </div>
+                <div class="colour-pane ">
+                    <div id="rgb-sliders">
+                        <h3 class="subtitle">RGB</h3>
+                        <div id="r-slider"></div>
+                        <div id="g-slider"></div>
+                        <div id="b-slider"></div>
+                    </div>
+                </div>
+                <div class="colour-pane">
+                    <div id="hsl-sliders">
+                        <h3 class="subtitle">HSL</h3>
+                        <div id="h-slider"></div>
+                        <div id="s-slider"></div>
+                        <div id="l-slider"></div>
+                    </div>
+                </div>
+                <div id="palette" class="ui-widget-content ui-corner-all">
+                    <h3 class="subtitle">Palette</h3>
+                    <div id="palette-bag">
+                        
+                    </div>
+                </div>
             </div>
+            <div class="accordion">
+                <div id="swatches" style="display:block;">
+                    <h3><a href="#">Shades</a></h3>
+                    <div id="swatch-shades"><!----></div>
+                    <h3><a href="#">Analogues</a></h3>
+                    <div id="swatch-analagous"><!----></div>
+                    <h3><a href="#">Tetrad</a></h3>
+                    <div id="swatch-tetrad"><!----></div>
+                    <h3><a href="#">Rectangular tetrad</a></h3>
+                    <div id="swatch-rect-tetrad"><!----></div>
+                    <h3><a href="#">Triad</a></h3>
+                    <div id="swatch-triad"><!----></div>
+                    <h3><a href="#">Split complement</a></h3>
+                    <div id="swatch-split"><!----></div>
+                    <h3><a href="#">Other Variants</a></h3>
+                    <div id="swatch-variants"><!----></div>
+                    <h3><a href="#">History (most recent first)</a></h3>
+                    <div id="history"><!----></div>
+                </div>
+            </div>
+            <!--<div class="ui-widget-content colour-pane colour-pane-short">-->
         </div>
-        <!--<div class="ui-widget-content colour-pane colour-pane-short">-->
     </div>
 </body>
 </html>

@@ -5,7 +5,7 @@ var updateSwatch, needUpdate = false,
     maxTries = 8,
     tryDelayFactor = 50,
     histSize = 500, // fits in a cookie nicely
-    settings;
+    settings, colour;
 
 
 /*
@@ -200,6 +200,7 @@ $.widget("ui.colourSwatch", {
         this.element.click(function (event) {
             self.options.click();
         });
+        //this.update(this.options.colour);
     },
     update: function (colour) {
         this.options.colour = this.options.makeColour(colour);
@@ -367,10 +368,12 @@ Settings.prototype = {
     _readCookie: function (name) {
         var nameEQ = this._cookieName + "=";
         var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
+        for(var i=0; i < ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            while (c.charAt(0) == ' ') { c = c.substring(1, c.length); }
+            if (c.indexOf(nameEQ) == 0) {
+                return c.substring(nameEQ.length, c.length);
+            }
         }
         return null;
     },
@@ -428,8 +431,8 @@ $(function () {
         historyPane = $("#history");
         updateQueued = false,
         histCookie = readCookie("colour-history"),
-        histList = histCookie?histCookie.split(","):[],
-        colour = new ColourProxy(settings.get("current-colour", "hotpink"));
+        histList = histCookie?histCookie.split(","):[];
+    colour = new ColourProxy(settings.get("current-colour", "hotpink"));
         
     mainReadOut.change(function () {
         try {
@@ -474,6 +477,7 @@ $(function () {
                ";'/>");
     }
     historyPane.append(h.join(""));
+    
     
     colour.change(function () {
         mainSwatch.css({
@@ -599,6 +603,8 @@ $(function () {
 });
 
 
+////////////////////////////////////////////////////////////////////////////////
+// Set up accordion
 $(function(){
     var resizeTimer,
         accordionSelection = settings.get("accordion");
@@ -622,7 +628,40 @@ $(function(){
         resizeTimer = setTimeout(function(){
             $("#swatches").accordion("resize");
             resizeTimer = null;
-        }, 100);
+        }, 50);
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Restore palette
+$(function(){
+
+    var palette = settings.get("palette"),
+        paletteBag = $("#palette-bag");
+    //$.each(palette, function (hex) {
+    //    
+    //});
+    $("#save-colour").button({
+        icons: {primary: 'ui-icon-disk'}    
+    })
+    .click(function(){
+        $("<span/>")
+            .colourSwatch({
+                click: function () {colour.set(this.colour);}
+            })
+            .colourSwatch("update", colour.getColour())
+            //.css("float", "left")
+            .css("opacity", 0)
+            .animate({"opacity": 1})
+            .prependTo(paletteBag)
+            
+            .fadeIn();
+    });
+    $("#palette-bag").sortable({
+        //placeholder: 'ui-state-highlight',
+        forcePlaceholderSize: true,
+        scroll: false,
+        tolerance: "pointer"
     });
 });
 
