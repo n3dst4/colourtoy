@@ -11,4 +11,5 @@
 
 .accordion{ height: expression(document.body.clientHeight - 55);}
 
-#palette { height: expression(document.body.clientHeight -390); } 
+#palette { height: expression(document.body.clientHeight -390); }
+#palette-bag { height: expression($(this).parent().height() - 60); bottom: auto;  }

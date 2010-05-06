@@ -4,7 +4,7 @@ var updateSwatch, needUpdate = false,
     console = global.console || {log: function(){}},
     maxTries = 8,
     tryDelayFactor = 50,
-    histSize = 500, // fits in a cookie nicely
+    histSize = 250, // fits in a cookie nicely
     settings, colour;
 
 
@@ -185,6 +185,9 @@ $.widget("ui.colourSwatch", {
     _create: function () {
         var self = this;
         this.element.addClass("colour-swatch ui-corner-all");
+        this.swatch = $("<div/>")
+            .addClass("colour-swatch-inner ui-corner-all")
+            .appendTo(this.element);
         this.readout = $("<span class='colour-swatch-readout'/>")
             .click (function(){return false;})
             .appendTo(this.element);
@@ -198,13 +201,14 @@ $.widget("ui.colourSwatch", {
             });
         }
         this.element.click(function (event) {
-            self.options.click();
+            self.options.click.call(self.options, event,
+                    {element: self.element, swatch: self.swatch});
         });
         //this.update(this.options.colour);
     },
     update: function (colour) {
         this.options.colour = this.options.makeColour(colour);
-        this.element.css({
+        this.swatch.css({
             "background-color": this.options.colour.toString()
             //"color": this.options.colour.contrast().toString()
         });
@@ -340,7 +344,7 @@ ColourProxy.prototype = {
  */
 function Settings (cookieName, days) {
     this._cookieName = cookieName = cookieName || "settings";
-    this._days = days || 354
+    this._days = days || 100
     try {
         this._settings = JSON.parse(this._readCookie());
     }
@@ -636,33 +640,69 @@ $(function(){
 // Restore palette
 $(function(){
 
-    var palette = settings.get("palette"),
+    var i, palette = settings.get("palette"),
         paletteBag = $("#palette-bag");
-    //$.each(palette, function (hex) {
-    //    
-    //});
-    $("#save-colour").button({
-        icons: {primary: 'ui-icon-disk'}    
-    })
-    .click(function(){
+    
+   
+    if (palette) {
+        palette = palette.split(",");
+        i = palette.length;
+        while (i--) {
+            addToPalette(new Colour(palette[i]));
+        }
+    }
+    
+    function savePalette () {
+        var list = [];
+        $("#palette-bag .colour-swatch").each(function () {
+            list.push($(this).colourSwatch("option", "colour").toString());
+        });
+        settings.set("palette", list.join(","));
+    }
+    
+    function addToPalette (newColour) {
         $("<span/>")
-            .colourSwatch({
-                click: function () {colour.set(this.colour);}
-            })
-            .colourSwatch("update", colour.getColour())
-            //.css("float", "left")
-            .css("opacity", 0)
-            .animate({"opacity": 1})
             .prependTo(paletteBag)
-            
-            .fadeIn();
-    });
-    $("#palette-bag").sortable({
-        //placeholder: 'ui-state-highlight',
-        forcePlaceholderSize: true,
-        scroll: false,
-        tolerance: "pointer"
-    });
+            .colourSwatch({
+                click: function (event, ui) {
+                    colour.set(this.colour);
+                    $("#palette-bag .ui-selected").removeClass("ui-selected");
+                    ui.element.addClass("ui-selected");
+                }
+            })
+            .colourSwatch("update", newColour)
+            .animate({"opacity": 1})
+            ;
+        savePalette();
+    }
+    
+    $("#save-colour")
+        .button({
+            icons: {primary: 'ui-icon-disk'}    
+        })
+        .click(function(){
+            addToPalette(colour.getColour());
+        });
+    $("#palette-bag")
+        .sortable({
+            forcePlaceholderSize: true,
+            scroll: false,
+            tolerance: "pointer",
+            stop: savePalette            
+        })
+        .selectable({
+            selecting: function () {console.log("hi");}
+        })
+        ;
+    $("#delete-colour")
+        .button({
+            icons: {primary: 'ui-icon-trash'}    
+        })
+        .click(function(){
+            $("#palette-bag .ui-selected").remove();
+            savePalette();
+        });
+        
 });
 
 

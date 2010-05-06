@@ -19,18 +19,15 @@
     <link rel="stylesheet" href="ui.labs-spinner.css" type="text/css" />
     <link rel="stylesheet" href="colourtoy.css" type="text/css" />
 
-    <!--[if lte IE 7]>
-    <style type="text/css">
-    </style>
-    <![endif]-->
+
     
     <!--[if lte IE 6 ]>
     <link rel="stylesheet" href="ie6.css" type="text/css" />
-    <style type="text/css">
-    
-    </style>
     <![endif]-->
     
+    <!--[if lte IE 7]>
+    <![endif]-->
+
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
     <script type="text/javascript" src="ui.labs-spinner.js"></script>
@@ -75,11 +72,10 @@
                         <div id="l-slider"></div>
                     </div>
                 </div>
-                <div id="palette" class="ui-widget-content ui-corner-all">
+                <div id="palette" class="ui-helper-reset ui-widget">
                     <h3 class="subtitle">Palette</h3>
-                    <div id="palette-bag">
-                        
-                    </div>
+                    <div id="palette-bag"></div>
+                    <button id="delete-colour">Delete</button>
                 </div>
             </div>
             <div class="accordion">
