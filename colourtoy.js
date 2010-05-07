@@ -691,7 +691,16 @@ $(function(){
             stop: savePalette            
         })
         .selectable({
-            selecting: function () {console.log("hi");}
+            unselected: function () {
+                if ($("#palette-bag .ui-selected").length === 0) {
+                    $("#delete-colour").button("disable");
+                }
+            },
+            selected: function () {
+                console.log("foo");
+                $("#delete-colour").button("enable");
+            }
+            
         })
         ;
     $("#delete-colour")

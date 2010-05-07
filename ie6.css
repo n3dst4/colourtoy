@@ -4,12 +4,9 @@
     qoverflow: auto;
 }
 
-.page-bag {
-    qheight: 100%;
-    width: expression($(this).parent().width() - 370);
-}
+.page-bag { width: expression($(this).parent().width() - 370); }
 
 .accordion{ height: expression(document.body.clientHeight - 55);}
 
 #palette { height: expression(document.body.clientHeight -390); }
-#palette-bag { height: expression($(this).parent().height() - 60); bottom: auto;  }
+#palette-bag { height: expression($(this).parent().height() - 30); bottom: auto;  }

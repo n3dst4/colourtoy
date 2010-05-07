@@ -1,2 +1,6 @@
 
 html, body {  background-color: white; color: #111;}
+
+.colour-swatch { background: #f2f2f2 none; }
+#palette-bag .ui-selected { background: #333 none; color: #eee; }
+.ui-selectable-helper { border-color: black !important; }
