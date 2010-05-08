@@ -643,13 +643,10 @@ $(function(){
     var i, palette = settings.get("palette"),
         paletteBag = $("#palette-bag");
     
-   
     if (palette) {
         palette = palette.split(",");
         i = palette.length;
-        while (i--) {
-            addToPalette(new Colour(palette[i]));
-        }
+        while (i--) { addToPalette(new Colour(palette[i])); }
     }
     
     function savePalette () {
@@ -659,18 +656,35 @@ $(function(){
         });
         settings.set("palette", list.join(","));
     }
+
+    function refreshDeleteButton () {    
+        if ($("#palette-bag .ui-selected").length === 0) {
+            $("#delete-colour").button("disable");
+        }
+        else {
+            $("#delete-colour").button("enable");
+        }
+    }
+
     
     function addToPalette (newColour) {
         $("<span/>")
-            .prependTo(paletteBag)
             .colourSwatch({
                 click: function (event, ui) {
                     colour.set(this.colour);
-                    $("#palette-bag .ui-selected").removeClass("ui-selected");
-                    ui.element.addClass("ui-selected");
+                    if (event.ctrlKey || event.shiftKey) {
+                        ui.element.toggleClass("ui-selected");
+                    }
+                    else {
+                        $("#palette-bag .ui-selected").removeClass("ui-selected");
+                        ui.element.addClass("ui-selected");                        
+                    }
+                    refreshDeleteButton();
                 }
             })
             .colourSwatch("update", newColour)
+            .css("opacity", 0)
+            .prependTo(paletteBag)
             .animate({"opacity": 1})
             ;
         savePalette();
@@ -691,25 +705,21 @@ $(function(){
             stop: savePalette            
         })
         .selectable({
-            unselected: function () {
-                if ($("#palette-bag .ui-selected").length === 0) {
-                    $("#delete-colour").button("disable");
-                }
-            },
-            selected: function () {
-                console.log("foo");
-                $("#delete-colour").button("enable");
-            }
+            filter: ".colour-swatch",
+            unselected: refreshDeleteButton,
+            selected: refreshDeleteButton
             
         })
         ;
     $("#delete-colour")
         .button({
+            disabled: true,
             icons: {primary: 'ui-icon-trash'}    
         })
         .click(function(){
             $("#palette-bag .ui-selected").remove();
             savePalette();
+            refreshDeleteButton();
         });
         
 });
