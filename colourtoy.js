@@ -82,7 +82,7 @@ $.widget("ui.colourComponent", {
         .appendTo(this.sliderDiv);
         
         this.rightHeader = $("<div/>")
-        .addClass("slider-label").addClass("slider-label-spare")
+        .addClass("slider-label").addClass("slider-label-secondary")
         .html(this.options.title)
         .appendTo(this.sliderDiv)
         .hide();
@@ -129,7 +129,7 @@ $.widget("ui.colourComponent", {
                 }
             }
             this.ctx.fillStyle = grad;
-            this.ctx.fillRect(0,0,255,20);
+            this.ctx.fillRect(0,0,256,20);
             var leftHeaderColour = stops[0].contrast().toString();
             var rightHeaderColour = stops.slice(-1)[0].contrast().toString();
             this.leftHeader.css("color", leftHeaderColour);
@@ -191,9 +191,6 @@ $.widget("ui.colourSwatch", {
         this.readout = $("<span class='colour-swatch-readout'/>")
             .click (function(){return false;})
             .appendTo(this.element);
-        this.title = $("<h3 class='colour-swatch-title ui-corner-top'/>")
-            .html(this.options.title)
-            .appendTo(this.element);
 
         if (this.options.colourProxy) {
             this.options.colourProxy.change(function (colour) {
@@ -216,7 +213,6 @@ $.widget("ui.colourSwatch", {
     }
 });
 $.ui.colourSwatch.prototype.options = {
-    title: "",
     colour: new Colour("black"),
     makeColour: function (colour) { return colour; },
     click: function () {
@@ -614,6 +610,7 @@ $(function(){
         accordionSelection = settings.get("accordion");
     if (accordionSelection){ accordionSelection = $(accordionSelection).prev(); }
     else { accordionSelection = 0;}
+
 
     $("#swatches").accordion({
         header: "> h3",

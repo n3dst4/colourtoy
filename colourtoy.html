@@ -52,11 +52,10 @@
         </div>
         <div class="page-body">
             <div class="page-bag">
-                <div id="main-swatch" class="ui-corner-all">
+                <div id="main-swatch" class="ui-corner-all colour-pane">
                     <input id="main-readout" />
-                    <button id="save-colour">Save colour</button>
                 </div>
-                <div class="colour-pane ">
+                <div class="colour-pane ui-helper-reset ui-corner-all">
                     <div id="rgb-sliders">
                         <h3 class="subtitle">RGB</h3>
                         <div id="r-slider"></div>
@@ -64,7 +63,7 @@
                         <div id="b-slider"></div>
                     </div>
                 </div>
-                <div class="colour-pane">
+                <div class="colour-pane ui-helper-reset ui-corner-all">
                     <div id="hsl-sliders">
                         <h3 class="subtitle">HSL</h3>
                         <div id="h-slider"></div>
@@ -72,10 +71,11 @@
                         <div id="l-slider"></div>
                     </div>
                 </div>
-                <div id="palette" class="ui-helper-reset ui-widget">
+                <div id="palette" class="colour-pane ui-helper-reset ui-corner-all">
                     <h3 class="subtitle">Palette</h3>
                     <div id="palette-bag"></div>
                     <button id="delete-colour">Delete</button>
+                    <button id="save-colour">Save colour</button>
                 </div>
             </div>
             <div class="accordion">

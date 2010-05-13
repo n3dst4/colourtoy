@@ -1,117 +1,79 @@
 /*
  * Layouty stuff
  */
-html, body { margin: 0; padding: 0; overflow: hidden; height: 100%;}
+html, body { margin: 0; padding: 0; overflow: auto; height: 100%;}
 body { height: 100%; margin:0; padding: 0; text-align: center; }
 
 .outer-wrapper { width: 700px; height: 100%; margin: 0 auto; text-align: left; position: relative;}
-.page-bar{
-	position:absolute;
-    width: 100%;
-	left: 0;
-	right: 0;
-	top: 0;
-	height:30px;
-	overflow:visible;
-}
-.page-body{
-	overflow: auto;
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 35px;
-	bottom: 0;
-}
 
-.accordion { position: absolute; float: none; top: 0; right: 0; bottom: 10px; width: 345px; }
-
-.page-bag { position: absolute; top: 0; bottom: 0; width: 345px; left: 0; text-align: left; }
-
-.colour-pane { display: inline-block; width: 310px; position: relative; }
-
-#palette { position: absolute; left: 0px; bottom:10px; top: 330px; width: 100%; overflow: hidden; }
-#palette-bag { position: absolute; width: 100%; top: 33px; bottom: 0px; overflow: auto; }
-#delete-colour { position: absolute; top: 0; right: 0; }
-
-
-
-
-body { font-family: sans-serif; font-size: 10px; }
-
-.page-bar {height: 16px; padding: 4px; line-height: 16px; margin-bottom: 10px;}
-
-.page-bar h1 {background: none; float: left; font-size: 1.5em; font-weight: bold; color: #ddd; text-shadow: black 0px 0px 3px;}
-
+/* Toolbar */
+.page-bar { position: absolute; left: 0; top: 0; height: 16px;  width: 100%;
+    padding: 4px; }
+.page-bar h1 {float: left;}
 .toolbar-item { height: 16px; vertical-align: middle; background:  none;}
+.toolbar-item-right { position: absolute; right: 0px; }
+.toolbar-item input, .toolbar-item label  { vertical-align: middle;} /* XXX needed? */
 
-.toolbar-item-right { position: absolute; top; 0px; right: 0px; }
+/* Layout parts */
+.page-body{ position: absolute; width: 100%; top: 35px; bottom: 10px; 
+    overflow: visible; }
 
-.toolbar-item input, .toolbar-item label  { vertical-align: middle;}
+.page-bag { position: absolute; top: 0; left: 0; height: 100%; width: 335px; }
+.page-bag > :last-child { margin-bottom: 0; }
+.accordion { position: absolute; top: 0; bottom: 0; right: 0px; width: 345px; qheight: 100%;
+    overflow: visible; }
 
+.colour-pane { position: relative; width: 100%; margin-bottom: 10px; padding: 0 0 0 10px;
+    border-width: 1px; border-style: solid;}
+h3 {margin-top: 0em; margin-bottom: 5px; text-align: left;}
 
-
-
-
-#main-swatch { width: 100%; height: 90px; background: black;
-    text-align: right; vertical-align: bottom; padding: 0px;
-    position: relative;}
+/* Main swatch */    
+#main-swatch { height: 90px; }
+#main-readout { position: absolute; bottom: 0.5em; right: 0.5em; width: 90px;
+    border: 1px solid white; text-align: right;}
     
-#main-readout { position: absolute; bottom: 0.5em; right: 0.5em; background: none;
-    border: 1px solid white; text-align: right; width: 90px;
-    font-family: "DejaVu Sans Mono", monospace; color: black;}
-    
-#save-colour {position: absolute; bottom: 0.5em; left: 0.5em;}
-
-.subtitle {margin-top: 0.8em; margin-bottom: 5px; text-align: left;}
+/* Palette */
+#palette { position: absolute; left: 0px; bottom: 0px; min-height: 150px; top: 355px; width: 100%; overflow: hidden; }
+#palette-bag { position: absolute; width: 95%; top: 33px; bottom: 0px; overflow: auto; }
+#save-colour {position: absolute; top: 1px; right: 80px;}
+#delete-colour { position: absolute; top: 1px; right: 0; }
 
 
-.slider-label { position: absolute; top: 0px; left:5px; }
-.slider-label-spare { left: auto; right: 5px; }
-
-
-.colour-component-slider { display: inline-block; position: relative; width: 255px;
-    height: 20px; vertical-align: middle; }
-
-.colour-component-slider .ui-slider-handle {
-    top: 12px;
-    background: none ! important;
-    border: 0px solid white ! important;
-    height: 16px;
-    width: 16px;
-    margin-left: -8px;
-}
-
-.colour-component-grippy {
-    width: 16px;
-    height: 16px;
-    left: 0px;
-    position: absolute;
-    overflow: hidden;
-    bottom: 0px;
-}
-
+/* Component sliders */
 .colour-component {margin-bottom: 10px;}
-.colour-component input {  margin-left: 0px; width: 42px; /*42px;*/
-    margin-left: 3px; qfont-size: small; height: 16px; padding: 1px }
-    
-.colour-component canvas { position: absolute; top:0px; left:0px; width: 100%; height: 100%; }
+.colour-component-slider { display: inline-block; position: relative;
+    width: 255px; line-height: 20px; height: 20px; vertical-align: middle; }
+.slider-label { position: absolute; top: 0px; left:5px; }
+.slider-label-secondary { left: auto; right: 5px; }
+.colour-component-slider .ui-slider-handle { top: 12px;  height: 16px;
+    width: 16px; margin-left: -8px; }
+.colour-component-grippy { width: 16px; height: 16px; }
+.colour-component input { height: 16px; width: 42px; margin-left: 3px;
+    padding: 1px }
+.colour-component canvas { position: absolute; top:0px; left:0px; width: 100%;
+    height: 100%; }
 
 
-
-
-.colour-swatch {width: 66px; height: 78px; position: relative; margin: 0px 3px 6px 0px;
-    display: inline-block; cursor: pointer; }
-
-.colour-swatch-readout { display: block; position: absolute; bottom: 1px; right: 3px;
-    font-size: 1em; cursor: text;}
-    
-.colour-swatch-title { padding: 0.2em 0.5em; font-size: small; font-weight: normal;}
-
-.colour-swatch-inner { width: 60px; height: 60px; position: absolute; top: 3px; left: 3px;}
-
-#qhistory {height: 160px; overflow: auto;}
-.colour-history-swatch {width: 90%; height: 16px; margin: 0px 2px 0.5em 0px;
+/* Swatches */
+.colour-swatch { position: relative; display: inline-block; height: 78px;
+    width: 66px; margin: 0px 3px 6px 0px; cursor: pointer; }
+.colour-swatch-inner { position: absolute; top: 3px; left: 3px;
+    width: 60px; height: 60px; }
+.colour-swatch-readout { display: block; position: absolute;
+    bottom: 1px; right: 3px; cursor: text;}
+.colour-history-swatch {width: 90%; height: 16px; margin: 0 0 5px 0;
     cursor: pointer; }
+
+
+/*
+ * Fonty and coloury stuff
+ */
+body { font-family: sans-serif; font-size: 10px; }
+.page-bar h1 {font-size: 1.5em; font-weight: bold; color: #ddd;
+    text-shadow: black 0px 0px 3px;}
+#main-readout { font-family: "DejaVu Sans Mono", monospace; background: none; }
+.colour-component-slider .ui-slider-handle { background: none ! important;
+    border: none ! important; }
 
 
 
