@@ -33,7 +33,7 @@ ColourProxy.prototype = {
         else {
             self.historyList.push(self.histColour || self.colour);
             self.histColour = null;
-            self._history();
+            self._history(colour);
         }
         // update
         this.colour = colour;
@@ -62,10 +62,10 @@ ColourProxy.prototype = {
         if (f) this.historyCallbacks.push(f);
         else this._history();
     },
-    _history: function () {
+    _history: function (newColour) {
         var i, self = this;
         for (i=0; i < self.historyCallbacks.length; i++) {
-            self.historyCallbacks[i].call(self.historyList, self.historyList);
+            self.historyCallbacks[i].call(self.historyList, self.historyList, newColour);
         }
     },
     toString: function () {

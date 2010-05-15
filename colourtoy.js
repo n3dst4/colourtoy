@@ -75,8 +75,11 @@ $(function () {
         historyPane.children(":gte("+histSize+")").remove();
     });
     
-    colour.history(function(history) {
-        createCookie("colour-history", $.map(history, function(colour){return colour.toString()}).slice(-histSize).join(","), 365);
+    colour.history(function(history, newColour) {
+        createCookie("colour-history", $.map(history, function(colour){
+            return colour.toString()}
+        ).slice(-histSize).join(","), 365);
+        updateUrl(newColour);
     });
     
     historyPane.delegate(".colour-history-swatch", "click", function (event) {
@@ -261,13 +264,24 @@ $(function(){
 // Palette
 $(function(){
 
-    var i, palette = settings.get("palette"),
+    var i,
+        savedPalette = settings.get("palette"),
+        urlPalette = getPaletteFromUrl(),
         paletteBag = $("#palette-bag");
     
-    if (palette) {
-        palette = palette.split(",");
-        i = palette.length;
-        while (i--) { addToPalette(new Colour(palette[i])); }
+    //debugger;
+    if (urlPalette && urlPalette.length > 0) {
+        colour.set(urlPalette[0], true);
+        i = urlPalette.length;
+        while (i --> 1) {
+            addToPalette(urlPalette[i], true);
+        }
+        savePalette();
+    }
+    else if (savedPalette) {
+        savedPalette = savedPalette.split(",");
+        i = savedPalette.length;
+        while (i--) { addToPalette(new Colour(savedPalette[i]), true); }
     }
     
     function savePalette () {
@@ -276,6 +290,7 @@ $(function(){
             list.push($(this).colourSwatch("option", "colour").toString());
         });
         settings.set("palette", list.join(","));
+        updateUrl(colour);
     }
 
     function refreshDeleteButton () {    
@@ -287,7 +302,7 @@ $(function(){
         }
     }
     
-    function addToPalette (newColour) {
+    function addToPalette (newColour, noSave) {
         $("<span/>")
             .colourSwatch({
                 click: function (event, ui) {
@@ -307,7 +322,7 @@ $(function(){
             .prependTo(paletteBag)
             .animate({"opacity": 1})
             ;
-        savePalette();
+        if (!noSave) { savePalette(); }
     }
     
     $("#save-colour")
@@ -365,29 +380,66 @@ $(function(){
         autoResize: true
     });
     
+    $("#share-frame").dialog({
+        width: 600,
+        height: 130,
+        autoOpen: false,
+        title: "Save & share"
+    });
+    
 
     $("#discuss-button").button({
         icons: {primary: 'ui-icon-person'}    
     })
     .click(function(event){
         $("#disqus_thread").dialog("open");
-    })
-    ;
-    $("#save-button").button({
-            icons: {primary: 'ui-icon-disk'}    
     });
+    
+    $("#save-button").button({
+            icons: {primary: 'ui-icon-star'}    
+    }).click(function(event){
+        $("#share-frame").dialog("open");
+    });
+    
+    
     $("#help-button").button({
         icons: {primary: 'ui-icon-info'}    
     })
     .click(function(event){
         $("#help-frame").attr("src", "http://docs.google.com/View?id=dc4kk99z_56c7zkfhdx")
-        .dialog("open").width(570).height(450);
+        .dialog("open").width(590).height(440);
         //$("#help-frame").attr("src", "http://lumphammer.com/dl").dialog("open");
     })
     ;
 
     
 });
+
+function updateUrl (newColour) {
+    var newUrl,
+        currentUrl = window.location.toString(),
+        baseUrl = currentUrl.replace(/#[^#]*$/, ""),
+        frags = [newColour.toHexString().substring(1)],
+        palette = settings.get("palette");
+    if (palette !== null) {
+        palette = palette.split(","); 
+        $.each(palette, function(i, frag) {
+            frags.push(frag.substring(1));
+        });
+    }
+    newUrl = [baseUrl, "#", frags.join("-")].join("");
+    $("#share-url").attr("value", newUrl);
+    window.location = newUrl;    
+}
+
+function getPaletteFromUrl () {
+    return $.map(
+            window.location.toString().replace(/^[^#]+(#|$)/, "").split("-"),
+            function (hex, i) {
+                return hex.length? new Colour("#" + hex): null;
+            }
+        )
+}
 
 function createCookie(name,value,days) {
 	if (days) {

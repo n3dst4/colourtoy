@@ -67,6 +67,9 @@ h3 {margin-top: 0em; margin-bottom: 5px; text-align: left;}
 .colour-history-swatch {width: 90%; height: 16px; margin: 0 0 5px 0;
     cursor: pointer; }
 
+#share-frame { text-align: left; }
+#share-url {width: 100%;}
+.blurb { margin: 1em; }
 
 /*
  * Fonty and coloury stuff
