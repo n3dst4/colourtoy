@@ -344,6 +344,51 @@ $(function(){
         
 });
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Other toolbar button
+$(function(){
+    
+    $("#disqus_thread").dialog({
+        width: 600,
+        height: 450,
+        autoOpen: false,
+        title: "Comment on The Colour Toy"
+        //modal: true
+    });
+    $("#help-frame").dialog({
+        width: 600,
+        height: 450,
+        autoOpen: false,
+        title: "Colour Toy Help",
+        //resizable: false,
+        autoResize: true
+    });
+    
+
+    $("#discuss-button").button({
+        icons: {primary: 'ui-icon-person'}    
+    })
+    .click(function(event){
+        $("#disqus_thread").dialog("open");
+    })
+    ;
+    $("#save-button").button({
+            icons: {primary: 'ui-icon-disk'}    
+    });
+    $("#help-button").button({
+        icons: {primary: 'ui-icon-info'}    
+    })
+    .click(function(event){
+        $("#help-frame").attr("src", "http://docs.google.com/View?id=dc4kk99z_56c7zkfhdx")
+        .dialog("open").width(570).height(450);
+        //$("#help-frame").attr("src", "http://lumphammer.com/dl").dialog("open");
+    })
+    ;
+
+    
+});
+
 function createCookie(name,value,days) {
 	if (days) {
 		var date = new Date();

@@ -3,15 +3,18 @@
  */
 html, body { margin: 0; padding: 0; overflow: auto; height: 100%;}
 body { height: 100%; margin:0; padding: 0; text-align: center; }
+iframe { border: none; }
 
 .outer-wrapper { width: 700px; height: 100%; margin: 0 auto; text-align: left; position: relative;}
 
 /* Toolbar */
 .page-bar { position: absolute; left: 0; top: 0; height: 16px;  width: 100%;
     padding: 4px; }
+.toolbar {  }
 .page-bar h1 {float: left;}
-.toolbar-item { height: 16px; vertical-align: middle; background:  none;}
-.toolbar-item-right { position: absolute; right: 0px; }
+.toolbar-items-right { position: absolute; top: 3px; left: 0; height: 100%; width: 100%; text-align: right; }
+.toolbar-item { display: inline-block; height: 16px; vertical-align: middle; background: none;}
+.toolbar-divider { width: 1em; }
 .toolbar-item input, .toolbar-item label  { vertical-align: middle;} /* XXX needed? */
 
 /* Layout parts */

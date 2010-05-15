@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="mul" lang="mul" dir="ltr"  class="">
 <head>
-    <title>Colour Toy</title>
+    <title>The Colour Toy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"  />-->
     
@@ -44,12 +44,27 @@
 <body>
     <div class="outer-wrapper">
         <div class="ui-widget-header page-bar">
-            <h1>Colour Toy</h1>
-            <div id="theme-select" class="toolbar-item toolbar-item-right">
-                <input type="radio" id="select-light" name="theme" value="light-theme" />
-                <label for="select-light">Light</label>
-                <input type="radio" id="select-dark" name="theme" checked="checked" value="dark-theme" />
-                <label for="select-dark">Dark</label>
+            <h1>The Colour Toy</h1>
+            <div class="toolbar-items-right">
+                <span class="toolbar-item">
+                    <button id="help-button">Help</button>
+                </span>
+                <span class="toolbar-item toolbar-divider"></span>
+                <span class="toolbar-item">
+                    <button id="discuss-button">Discuss</button>
+                </span>
+                <span class="toolbar-item toolbar-divider"></span>
+                <span class="toolbar-item">
+                    <button id="save-button">Save & share</button>
+                </span>
+                <span class="toolbar-item toolbar-divider"></span>
+                Theme:
+                <span id="theme-select" class="toolbar-item">
+                    <input type="radio" id="select-light" name="theme" value="light-theme" />
+                    <label for="select-light">Light</label>
+                    <input type="radio" id="select-dark" name="theme" checked="checked" value="dark-theme" />
+                    <label for="select-dark">Dark</label>
+                </span>
             </div>
         </div>
         <div class="page-body">
@@ -103,6 +118,41 @@
             <!--<div class="ui-widget-content colour-pane colour-pane-short">-->
         </div>
     </div>
+    
+    <iframe id="help-frame" style="display: none; width: 100%; height: 100%;"></iframe>
+    
+    <div id="share-frame" style="display: none;"></div>
+    
+    <div id="disqus_thread" style="display: none;"></div>
+    <script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread] 
+    */
+  disqus_developer = true;
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://colourtoy.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=colourtoy">comments powered by Disqus.</a></noscript>
+
+    
+    <script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/colourtoy/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+    </script>
+    
 </body>
 </html>
 
