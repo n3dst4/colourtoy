@@ -245,7 +245,6 @@ $(function(){
         active: accordionSelection,
         changestart: function (event, ui) {
             ui.newContent.colourSwatchGroup("update", colour, true);
-            console.log(ui.newContent.attr("id"));
             settings.set("accordion", "#" + ui.newContent.attr("id"));
         }
     });
@@ -269,7 +268,6 @@ $(function(){
         urlPalette = getPaletteFromUrl(),
         paletteBag = $("#palette-bag");
     
-    //debugger;
     if (urlPalette && urlPalette.length > 0) {
         colour.set(urlPalette[0], true);
         i = urlPalette.length;
