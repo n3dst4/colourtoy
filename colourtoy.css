@@ -72,6 +72,8 @@ h3 {margin-top: 0em; margin-bottom: 5px; text-align: left;}
 .blurb { margin: 1em; }
 #disqus_thread { background: white; color: black; }
 #disqus_thread a { color: #3e98bf; }
+#ie6-warning {text-align: left;}
+.warning-message { padding: 1em; font-weight: bold; }
 
 /*
  * Fonty and coloury stuff

@@ -407,11 +407,22 @@ $(function(){
         $("#help-frame").attr("src", "http://docs.google.com/View?id=dc4kk99z_56c7zkfhdx")
         .dialog("open").width(590).height(440);
         //$("#help-frame").attr("src", "http://lumphammer.com/dl").dialog("open");
-    })
-    ;
-
-    
+    });
 });
+
+
+////////////////////////////////////////////////////////////////////////////////
+// IE6
+$(function(){
+    if ($.browser.msie && $.browser.version < 7) {
+        $("#ie6-warning").dialog({
+            width: 600,
+            title: "Very old browser detected"
+            
+        });
+    }
+});
+
 
 function updateUrl (newColour) {
     var newUrl,
