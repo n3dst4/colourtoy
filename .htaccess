@@ -1,1 +1,5 @@
-DirectoryIndex colourtoy.html
+DirectoryIndex index.html
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/javascript text/css
+ExpiresActive On
+ExpiresDefault "access plus 7 days"
+ExpiresByType text/html A3600
