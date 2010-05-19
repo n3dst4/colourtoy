@@ -386,12 +386,6 @@ $(function(){
     });
     
 
-    $("#discuss-button").button({
-        icons: {primary: 'ui-icon-person'}    
-    })
-    .click(function(event){
-        $("#disqus_thread").dialog("open");
-    });
     
     $("#save-button").button({
             icons: {primary: 'ui-icon-star'}    
@@ -408,6 +402,46 @@ $(function(){
         .dialog("open").width(590).height(440);
         //$("#help-frame").attr("src", "http://lumphammer.com/dl").dialog("open");
     });
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Discussion
+$(function () {
+    global.disqus_developer = true;
+    var disqusEnabled = false;
+    
+    $("#discuss-button").button({
+        icons: {primary: 'ui-icon-person'}    
+    })
+    .click(function(event){
+        if (!disqusEnabled) { enableDisqus(); }
+        $("#disqus_thread").dialog("open");
+    });
+    
+    function enableDisqus () {
+        /**
+          * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread] 
+          */
+        
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://colourtoy.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      
+        disqusEnabled = true;
+      
+        /*  
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+        }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/colourtoy/get_num_replies.js' + query + '"></' + 'script>');
+        //*/
+    }
 });
 
 
