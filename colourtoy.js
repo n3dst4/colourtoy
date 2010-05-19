@@ -447,6 +447,7 @@ $(function () {
 
 ////////////////////////////////////////////////////////////////////////////////
 // IE6
+/*
 $(function(){
     if ($.browser.msie && $.browser.version < 7) {
         $("#ie6-warning").dialog({
@@ -456,7 +457,7 @@ $(function(){
         });
     }
 });
-
+//*/
 
 function updateUrl (newColour) {
     var newUrl,
