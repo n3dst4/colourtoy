@@ -26,8 +26,8 @@ iframe { border: none; }
 .accordion { position: absolute; top: 0; bottom: 0; right: 0px; width: 345px; qheight: 100%;
     overflow: visible; }
 
-.colour-pane { position: relative; width: 100%; margin-bottom: 10px; padding: 0 0 0 10px;
-    border-width: 1px; border-style: solid;}
+.colour-pane { position: relative; width: 100%; margin-bottom: 10px !important; padding: 0 0 0 10px !important;
+    border-width: 1px !important; border-style: solid !important;}
 h3 {margin-top: 0em; margin-bottom: 5px; text-align: left;}
 
 /* Main swatch */    
@@ -43,13 +43,13 @@ h3 {margin-top: 0em; margin-bottom: 5px; text-align: left;}
 
 
 /* Component sliders */
-.colour-component {margin-bottom: 10px;}
-.colour-component-slider { display: inline-block; position: relative;
-    width: 255px; line-height: 20px; height: 20px; vertical-align: middle; }
+.colour-component {margin-bottom: 10px !important;}
+.colour-component-slider { display: inline-block !important; position: relative !important;
+    width: 255px; line-height: 20px !important; height: 20px !important; vertical-align: middle !important; }
 .slider-label { position: absolute; top: 0px; left:5px; }
 .slider-label-secondary { left: auto; right: 5px; }
-.colour-component-slider .ui-slider-handle { top: 12px;  height: 16px;
-    width: 16px; margin-left: -8px; }
+.colour-component-slider .ui-slider-handle { top: 12px !important;  height: 16px !important;
+    width: 16px !important; margin-left: -8px !important; }
 .colour-component-grippy { width: 16px; height: 16px; }
 .colour-component input { height: 16px; width: 42px; margin-left: 3px;
     padding: 1px }

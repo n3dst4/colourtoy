@@ -1,8 +1,8 @@
 
-html, body {  background-color: black; color: #eee;}
+html.dark-theme, html.dark-theme body {  background-color: black; color: #eee;}
 
-.colour-swatch { background: #333 none; }
-#palette-bag .ui-selected { background: #eee none; color: #111; }
-.ui-selectable-helper { border-color: white !important; }
+html.dark-theme .colour-swatch { background: #333 none; }
+html.dark-theme #palette-bag .ui-selected { background: #eee none; color: #111; }
+html.dark-theme .ui-selectable-helper { border-color: white !important; }
 
-.colour-pane {border-color: #333;}
+html.dark-theme .colour-pane {border-color: #333;}

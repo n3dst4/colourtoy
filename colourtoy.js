@@ -25,15 +25,7 @@ $(function () {
     selectTheme(themeName);
     
     function selectTheme (themeName) {
-        $("link.theme").each(function () {
-            var el = $(this);
-            if (el.hasClass(themeName)) {
-                el.attr("media", "screen");
-            }
-            else {
-                el.attr("media", "none");
-            }
-        });
+        $("html").removeClass("light-theme dark-theme").addClass(themeName);
         settings.set("theme", themeName);
     }
 });
