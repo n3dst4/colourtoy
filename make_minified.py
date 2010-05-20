@@ -24,8 +24,8 @@ minified = urllib2.urlopen("http://closure-compiler.appspot.com/compile",
 with open("all-minified.js", "w") as output:
     output.write(minified)
 
-with open("all.js", "w") as output:
-    output.write(code)
+#with open("all.js", "w") as output:
+#    output.write(code)
 
 print("Original:" + str(len(code)) + " in " + str(len(files)) + " files" +
       "\nMinified (SIMPLE_OPTIMIZATIONS):" + str(len(minified)) + " in 1 file")
