@@ -407,7 +407,7 @@ $(function(){
 ////////////////////////////////////////////////////////////////////////////////
 // Discussion
 $(function () {
-    global.disqus_developer = true;
+    //global.disqus_developer = true;
     var disqusEnabled = false;
     
     $("#discuss-button").button({
