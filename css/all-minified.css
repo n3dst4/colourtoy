@@ -1117,11 +1117,17 @@ div.ui-spinner { background: none; }
 /*
  * Layouty stuff
  */
-html, body { margin: 0; padding: 0; overflow: auto; height: 100%;}
+html, body { margin: 0; padding: 0; overflow: hidden; height: 100%;}
 body { height: 100%; margin:0; padding: 0; text-align: center; }
 iframe { border: none; }
 
 .outer-wrapper { width: 700px; height: 100%; margin: 0 auto; text-align: left; position: relative;}
+#overlay {position: absolute; top: 0; left:0; width: 100%; height: 100%; z-index: 1001; margin:0; padding:0; }
+#blurb { width: 400px; height: 300px; position: absolute; top: 50%; margin-top: -150px; left: 50%; margin-left: -200px; font-size: 12pt; }
+#blurb p {text-align: left; margin-bottom: 1em; } 
+#indefinite-loading-bar { width: 220px; height: 19px; background: url(images/indefinite-loading-bar.gif); margin: 0 auto;
+    line-height: 19px; color: black; }
+#go-button { display: none;}
 
 /* Toolbar */
 .page-bar { position: absolute; left: 0; top: 0; height: 16px;  width: 100%;

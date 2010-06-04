@@ -349,18 +349,27 @@ $(function(){
         
 });
 
+////////////////////////////////////////////////////////////////////////////////
+// Enable page
+$(function () {
+    if (settings.get("skipIntro")) {
+        $("#overlay").hide();
+    }
+    $("#indefinite-loading-bar").fadeOut(500, function () {
+        $("#go-button").fadeIn(500, function () {
+            $("#go-button").click(function () {
+                $("#overlay").fadeOut();
+                settings.set("skipIntro", true);
+            });
+        });
+    });
+});
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Other toolbar button
 $(function(){
     
-    $("#disqus_thread").dialog({
-        width: 600,
-        height: 450,
-        autoOpen: false,
-        title: "Comment on The Colour Toy"
-        //modal: true
-    });
     $("#help-frame").dialog({
         width: 600,
         height: 450,
@@ -401,6 +410,14 @@ $(function(){
 $(function () {
     //global.disqus_developer = true;
     var disqusEnabled = false;
+
+    $("#disqus_thread").dialog({
+        width: 600,
+        height: 450,
+        autoOpen: false,
+        title: "Comment on The Colour Toy"
+        //modal: true
+    });
     
     $("#discuss-button").button({
         icons: {primary: 'ui-icon-person'}    

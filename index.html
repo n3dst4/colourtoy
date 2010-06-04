@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="mul" lang="mul" dir="ltr"  class="dark-theme">
 <head>
     <title>The Colour Toy</title>
@@ -10,14 +10,6 @@
     <!--[if lte IE 6 ]>
     <link rel="stylesheet" href="css/ie6.css" type="text/css" />
     <![endif]-->
-    
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="all-minified.js"></script>
-    <!--[if lte IE 8]>
-    <script type="text/javascript" src="excanvas.js"></script>
-    <![endif]-->
-    
 </head>
 <body>
     <script type="text/javascript">
@@ -30,7 +22,47 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-    </script>    
+    </script>
+    <div id="overlay" class="ui-widget-content">
+        <div id="blurb">
+            <p>
+            This is The Colour Toy (yes, that's with a "u", but but Google
+            should be able to find it anyway,) a tool for mixing and matching
+            colours.</p>
+            <p>
+            You can make colours using RGB or HSL sliders, and find new shades
+            using automatic colour schemes.</p>
+            <p>
+            Save nice colors (I threw in a US spelling there just in case) into
+            a palette and bookmark it or share it with others.</p>
+            <p>
+            Yes, this text is here mainly to make The Colour Toy slightly
+            less search-engine-hostile. Please feel free to help out by linking
+            to it everywhere you can.</p>
+            <p>
+            And don't worry - this text will automatically dissappear the next
+            time you visit.</p>
+            
+            <div id="indefinite-loading-bar">Loading</div>
+            <button id="go-button" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                <span class="ui-button-text">Go</span>
+            </button>
+        </div>
+        <script type="text/javascript">
+            if (/skipIntro/.test(document.cookie)) {
+                document.getElementById("blurb").style.display = "none";
+            }
+        </script>
+        
+    </div>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="all-minified.js"></script>
+    <!--[if lte IE 8]>
+    <script type="text/javascript" src="excanvas.js"></script>
+    <![endif]-->
+    
     <div class="outer-wrapper">
         <div class="ui-widget-header page-bar">
             <h1>The Colour Toy</h1>
@@ -148,9 +180,6 @@
         <p class="warning-message">
             TDB
         </p>
-        
-        
-        
     </div>
     
     <div id="disqus_thread" style="display: none;"></div>
