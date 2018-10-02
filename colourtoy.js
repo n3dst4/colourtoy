@@ -350,23 +350,6 @@ $(function(){
 });
 
 ////////////////////////////////////////////////////////////////////////////////
-// Enable page
-$(function () {
-    if (settings.get("skipIntro")) {
-        $("#overlay").hide();
-    }
-    $("#indefinite-loading-bar").fadeOut(500, function () {
-        $("#go-button").fadeIn(500, function () {
-            $("#go-button").click(function () {
-                $("#overlay").fadeOut();
-                settings.set("skipIntro", true);
-            });
-        });
-    });
-});
-
-
-////////////////////////////////////////////////////////////////////////////////
 // Other toolbar button
 $(function(){
     
