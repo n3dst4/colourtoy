@@ -17,7 +17,7 @@ for file in js_files:
         code += input.read()
         code += "\n;\n"
 
-minified = urllib2.urlopen("http://closure-compiler.appspot.com/compile",
+minified = urllib2.urlopen("https://closure-compiler.appspot.com/compile",
     urllib.urlencode({
         "js_code": code,
         "compilation_level": "SIMPLE_OPTIMIZATIONS",
